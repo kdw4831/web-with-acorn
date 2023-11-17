@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/game.html</title>
+    <style>
+        canvas{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1>canvas 요소 활용하기</h1>
+    <!-- canvas 요소는 width 와 height 를 속성으로 직접 지정할수 있다. -->
+    <canvas id="myCanvas" width="800" height="500"></canvas>
+    <script>
+        /*
+            javascript 로 canvas 요소에 그림을 그릴수 있다.
+            이미지를 로딩해서 이미지도 원하는 크기로 원하는 위치에 그릴수도 있다.
+            도형, 글자도 출력가능
+        */
+        //canvas 요소의 참조값 
+        const canvas=document.querySelector("#myCanvas");
+        //canvas 에 그림을 그릴 도구(context) 객체 얻어내기
+        const context=canvas.getContext("2d");
+
+
+        
+        
+        //canvas 에 그릴 이미지 로딩
+        const snipeImg=new Image();
+        snipeImg.src="images/snipe.png";
+
+        const holeImg=new Image();
+        holeImg.src="images/hole.png";
+
+        //배경이미지 
+        const backImg= new Image();
+        backImg.src="images/background.jpg";
+
+
+        //snipe 의 좌표
+        let snipeX=0, snipeY=0;
+
+        //총알 구멍 정보를 누적시킬 빈 배열을 미리 준비
+        const holes=[];
+        const fireSound= new Audio("sounds/fire.wav");
+
+        const pianoSound=new Audio("sounds/piano.mp3");
+
+        const dieSound=new Audio("sounds/birddie.mp3");
+
+
+        //토끼 이미지
+        const rabbitImg=new Image("/images/rabbit_1.png");
+        
+        rabbitImg.src="images/rabbit_1.png";
+        const rabbitImg2=new Image("images/rabbit2.png");
+        rabbitImg2.src="images/rabbit2.png";
+        //토끼 이미지를 배열에 담아놓기
+        const rabbitImgs=[rabbitImg,rabbitImg2];
+        //토끼 이미지 인덱스를 저장할 변수
+        let rabbitIndex=0;
+
+        //토끼의 좌표를 저장할 변수
+        let rabbitX=400, rabbitY=250;
+
+        //카운트를 셀 변수
+        let count=0;
+        
+        //토끼 파편 이미지 로딩해서 배열에 저장하기
+        const fragImgs=[];
+        for(let i=0; i<5; i++){
+            let tmp= new Image();
+            tmp.src="images/r"+i+".png";
+            fragImgs.push(tmp);
+        }
+         //토끼 파편 객체(object)를 저장할 배열
+         let fragments=[];
+
+
+
+        // 10/1000  초  즉 1/100 초 마다 한번씩 호출되는 콜백함수 등록
+        setInterval(()=>{
+            // 사각형영역 clear   (x, y, width, height)
+            //context.clearRect(0, 0, 800, 500);
+            //배경이미지 그리기
+            context.drawImage(backImg,0,0,800,500);  //배경이미지가 기존에 그렸던 것을 덮어버리기때문에 사각형을 클리어할 필요 x
+            count++;
+
+            
+            //반복문 돌면서 모든 총알 구멍 이미지 그리기
+            for(let i=0; i<holes.length; i++){
+                //i 번째 총알 구멍 object
+                let tmp=holes[i];
+                //object 에 저장된 좌표를 이용해서 총알 구멍 그리기
+                context.drawImage(holeImg, tmp.x-10, tmp.y-10, 20, 20);
+            }
+
+      
+            
+            //토끼 이미지 그리기
+            context.drawImage(rabbitImgs[rabbitIndex], rabbitX-50,rabbitY-50,100,100);
+
+            //토끼 파편 그리기
+            for(let i=0; i<fragments.length; i++){
+                let tmp=fragments[i];
+                context.drawImage(fragImgs[tmp.index],tmp.x-50,tmp.y-50,100,100)
+            }
+            //토끼 파편 움직이기
+            fragments.forEach((tmp)=>{
+                //각각의 파편 객체가 가지고 있는 속도만큼 좌표에 반영하기
+                tmp.x += tmp.speedX;
+                tmp.y += tmp.speedY;
+                //tmp.isOut=!(tmp.x<-50 && tmp.x>850 &&tmp.y<-50 && tmp.y>550); 같은 의미
+                tmp.isOut=tmp.x<-50 || tmp.x>850 ||tmp.y<-50 || tmp.y>550;
+            })
+
+            //화면을 벗어난 object가 제거된 새로운 배열을 얻어내서 fragments 변수에 대입
+            //fragments=fragments.filter()
+            
+            fragments=fragments.filter((tmp)=>!tmp.isOut);
+            // //위와 같다 람다식이 확실히 좋네 
+            // fragments=fragments.filter((tmp)=>{
+            //     //배열에서 제거하지 않고 남길ㄹ지 여부
+            //     let isLive= !tmp.isOut;
+            //     return isLive;
+            // });
+
+
+            // //새로운 배열을 얻어내지 않고 기존의 배열에서 제거할 item만 제거하기
+            // for(let i=fragments.length-1; i>=0; i--){
+            //     // 배열의 마지막 번째 인덱스로 부터 역순으로 검사하면서 제거하기 
+            //     let tmp= fragments[i];
+            //     // 만일 화면을 벗어 났다면
+            //     if(tmp.isOut){
+            //         //fragments 배열에서 i 번째 인덱스로 부터 1개 제거하기
+            //         fragments.splice(i,1);
+            //     }
+
+            // }
+
+            
+            
+
+            //여기는 1초에 100 번씩 실행되는 영역이다
+            context.drawImage(snipeImg, snipeX-50, snipeY-50, 100, 100);
+
+            if(count%20==0){
+                //토끼 애니메이션
+                rabbitIndex++;
+                //만일 존재하지 않는 인덱스라면
+                if(rabbitIndex==2){
+                    //인덱스를 다시 처음으로 되돌리기
+                    rabbitIndex=0;
+                }
+            }
+
+           
+        }, 10);
+
+        //canvas 요소에서 발생하는 mousemove 이벤트 처리
+        canvas.addEventListener("mousemove", (e)=>{
+            //이벤트가 발생한곳의 canvas 내에서의 좌표
+            snipeX=e.offsetX;
+            snipeY=e.offsetY;
+        });
+        //canvas 요소에서 발생하는 mousedown 이벤트 처리
+        canvas.addEventListener("mousedown", (e)=>{
+            const x=e.offsetX;
+            const y=e.offsetY;
+
+            //이벤트가 발생한곳의 좌표(총알 구멍을 그려야하는 좌표)를 object 에 담는다.
+            const obj={x, y};
+            //object 를 배열에 누적 시킨다. 
+            holes.push(obj);
+            //총소리를 재생한다.
+            fireSound.currentTime=0; // 연속재생이 안되서 클릭할 때마다 재생시간이 0으로 초기화 되게끔 하기
+            fireSound.play();
+
+            //토끼가 총에 맞았는지 여부
+            const isRabbitDie= x>rabbitX-50 && x<rabbitX+50 && y>rabbitY-50 && y<rabbitY+50;
+
+            if(isRabbitDie){
+                dieSound.currentTime=0;
+                dieSound.play();
+                console.log(" 죽었으")
+
+                //토끼 파편 객체 5개 만들기
+                for(let i=0; i<5; i++){
+                    //빈 object를 만들어서
+                    let tmp={};
+                    //초기 좌표는 현재 토끼 좌표
+                    tmp.x=rabbitX;
+                    tmp.y=rabbitY;
+                    //매주기(10/1000)초 마다 움직일 거리(속도)를 랜덤하게 부여하기
+                    tmp.speedX=Math.random()*10-5; // -5에서 5사이의 랜덤한 실수 
+                    tmp.speedY=Math.random()*10-5;
+                    //파편의 이미지 인덱스도 부여하기
+                    tmp.index=i;
+                    tmp.isOut=false //화면에서 벗어 났는지 여부
+                    // 파편의 정보를 가지고 있는 object를 배열에 누적시키기
+                    fragments.push(tmp);
+                }
+
+                // 토끼의 좌표를 랜덤한 위치로 변경
+                rabbitX=Math.random()*700+50;
+                rabbitY=Math.random()*400+50;
+            }
+
+
+           
+        
+        });
+
+        
+
+    </script>
+</body>
+</html>
