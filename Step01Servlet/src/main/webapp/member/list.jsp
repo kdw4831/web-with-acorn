@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+
 	//DB에서 읽어온 회원 목록이라고 가정하자
 	//회원 목록을 담을 ArrayList 객체
 	List<MemberDto> list= new ArrayList<MemberDto>();
