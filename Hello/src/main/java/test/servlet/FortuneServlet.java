@@ -22,7 +22,8 @@ public class FortuneServlet extends HttpServlet{//1. 상속
 		//fortune 요청이 올때 호출 됨
 		System.out.println("오잉");
 		
-		// 응답 인코딩 설정
+		
+		//응답 인코딩 설정
 		resp.setCharacterEncoding("utf-8");
 		//응답 컨텐트 설정
 		resp.setContentType("text/html; charset=utf-8");

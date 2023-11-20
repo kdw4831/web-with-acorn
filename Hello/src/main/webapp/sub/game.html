@@ -11,6 +11,9 @@
     </style>
 </head>
 <body>
+	<!--인덱스 페이지로 되돌아가는 링크를 작성해 보세요-->
+	<a href="../index.html">인덱스 페이지로 가기</a><br>
+	<a href="/Hello/index.html">인덱스 페이지로 가기</a>
     <h1>canvas 요소 활용하기</h1>
     <!-- canvas 요소는 width 와 height 를 속성으로 직접 지정할수 있다. -->
     <canvas id="myCanvas" width="800" height="500"></canvas>
@@ -30,14 +33,14 @@
         
         //canvas 에 그릴 이미지 로딩
         const snipeImg=new Image();
-        snipeImg.src="images/snipe.png";
+        snipeImg.src="../images/snipe.png";
 
         const holeImg=new Image();
-        holeImg.src="images/hole.png";
+        holeImg.src="/Hello/images/hole.png";
 
         //배경이미지 
         const backImg= new Image();
-        backImg.src="images/background.jpg";
+        backImg.src="/Hello/images/background.jpg";
 
 
         //snipe 의 좌표
@@ -45,18 +48,18 @@
 
         //총알 구멍 정보를 누적시킬 빈 배열을 미리 준비
         const holes=[];
-        const fireSound= new Audio("sounds/fire.wav");
+        const fireSound= new Audio("/Hello/sounds/fire.wav");
 
-        const pianoSound=new Audio("sounds/piano.mp3");
+        const pianoSound=new Audio("/Hello/sounds/piano.mp3");
 
-        const dieSound=new Audio("sounds/birddie.mp3");
+        const dieSound=new Audio("/Hello/sounds/birddie.mp3");
 
 
         //토끼 이미지
-        const rabbitImg=new Image("/images/rabbit_1.png");
+        const rabbitImg=new Image("/Hello/images/rabbit_1.png");
         
         rabbitImg.src="images/rabbit_1.png";
-        const rabbitImg2=new Image("images/rabbit2.png");
+        const rabbitImg2=new Image("/Helloimages/rabbit2.png");
         rabbitImg2.src="images/rabbit2.png";
         //토끼 이미지를 배열에 담아놓기
         const rabbitImgs=[rabbitImg,rabbitImg2];
@@ -73,7 +76,7 @@
         const fragImgs=[];
         for(let i=0; i<5; i++){
             let tmp= new Image();
-            tmp.src="images/r"+i+".png";
+            tmp.src="/Hello/images/r"+i+".png";
             fragImgs.push(tmp);
         }
          //토끼 파편 객체(object)를 저장할 배열

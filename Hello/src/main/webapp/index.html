@@ -11,8 +11,20 @@
 		
 		<ul> 
 			<li><a href="study.html">공부하러가기</a></li>
-			<li><a href="game.html">토끼잡기 게임</a></li>
+			<!-- 상대경로-->
+			<li><a href="sub/game.html">토끼잡기 게임</a></li>
+			<!--
+				서버 내에서의 절대 경로
+				context path로 시작되면 서버내에서 절대 경로가 된다.
+			-->
+			<li><a href="/Hello/sub/game.html">토끼잡기 게임</a></li>
+			
+			<!-- 
+				웹에서의 절대경로
+			-->
+			<li><a href="http://localhost:8888/Hello/sub/game.html">토끼잡기 게임</a></li>
 			<li><a href="fortune">오늘의 운세</a></li>
+			<li><a href="/Hello/fortune">오늘의 운세</a></li>
 			<li><a href="friends">친구목록 보기</a></li>
 		</ul>
 		
