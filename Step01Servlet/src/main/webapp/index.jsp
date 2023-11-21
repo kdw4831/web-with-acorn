@@ -31,6 +31,19 @@
 			<button type="submit">전송</button>
 		</form>
 		
+		<p>링크를 눌러도 GET 방식 전송 파라미터를 전달할 수 있다.</p>
+		<p>아래의 링크를 눌러 보세요</p>
+		<ul>
+			<li><a href="shop/buy.jsp?num=1&amount=2">1번 상품 2개 구입하기</a></li>
+			<li><a href="shop/buy.jsp?num=5&amount=3" target="_blank">5번 상품 3개 구입하기</a></li>
+			
+		</ul>
+		<form action="${pageContext.request.contextPath}/shop/buy.jsp" method="get">
+			<input type="text" name="num" placeholder="상품번호..." />
+			<input type="text" name="amount" placeholder="갯수..." />
+			<button type="submit">구입</button>
+		</form>
+		
 		
 		
 	</div>
