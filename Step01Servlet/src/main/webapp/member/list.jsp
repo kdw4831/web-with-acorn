@@ -3,7 +3,7 @@
 <%@page import="test.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+
 <%
 
 	//DB에서 읽어온 회원 목록이라고 가정하자
@@ -13,6 +13,7 @@
 	list.add(new MemberDto(2,"해골","행신동"));
 	list.add(new MemberDto(3,"원숭이","동물원"));
 %>
+<!DOCTYPE html>
 <html>
 <head>	
 <meta charset="UTF-8">
