@@ -84,6 +84,80 @@ public class MemberDao {
 		}
 	}
 	
+	//회원 한명의 정보를 수정해주는 메소드
+	public boolean update(MemberDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int rowCount = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "UPDATE member"
+					+"SET name=?, addr=?"
+					+"WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩 할 내용이 있으면 바인딩
+			pstmt.setInt(1, dto.getNum());
+			pstmt.setString(2,dto.getName() );
+			pstmt.setString(3, dto.getAddr());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//회원 한명의 정보를 리턴해주는 메소드
+	public MemberDto getData(int num) {
+		MemberDto dto= null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 sql 문
+			String sql = "SLECT *"
+					+"FROM member"
+					+"WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩할 내용이 있으면 여기서 한다.
+			pstmt.setInt(1, num);
+			//query 문 수행하고 결과(ResultSet) 얻어내기
+			rs = pstmt.executeQuery();
+			//반복문 돌면서 
+			if (rs.next()) {
+				dto= new MemberDto();
+				dto.setNum(num);
+				dto.setName(rs.getString("name"));
+				dto.setAddr(rs.getString("addr"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close(); //Connection 객체의 close() 메소드를 호출하면 Pool 에 반납된다.
+			} catch (Exception e) {}
+		}
+		return dto;
+	}
 	
 	//회원 목록을 리턴해주는 메소드 
 	public List<MemberDto> getList(){
