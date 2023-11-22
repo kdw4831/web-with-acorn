@@ -26,4 +26,23 @@
     <!--
     <Manager pathname="" />
     -->
+    <!-- 
+    	[Tomcat 서버가 start 될때 읽어들이는 DB접속 정보 설정]
+    	
+    	Web-INF/lib 폴더에 ojdbc6.jar 파일이 있어야 동작한다. 
+    	
+    	data source 이름(마음대로 지을 수 있다.) : jdbc/myoracle
+    	접속할 ip 주소 :127.0.0.1
+    	port 번호: 1521
+    	설치된 oracle의 sid(database 이름) : xe
+    	계정: scott
+    	비밀번호: tiger
+    -->
+    <Resource name="jdbc/myoracle" auth="Container"
+              type="javax.sql.DataSource" driverClassName="oracle.jdbc.OracleDriver"
+              url="jdbc:oracle:thin:@127.0.0.1:1521:xe"
+              username="scott" password="tiger" maxTotal="20" maxIdle="10"
+              maxWaitMillis="-1"/>
 </Context>
+
+
