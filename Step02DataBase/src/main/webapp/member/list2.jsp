@@ -1,9 +1,10 @@
-
 <%@page import="test.member.dto.MemberDto"%>
 <%@page import="java.util.List"%>
 <%@page import="test.member.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
 <%
 	//MemberDao 객체 참조값을 static 메소드를 이용해서 얻어온다.
 	MemberDao dao= MemberDao.getInstance();

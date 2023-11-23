@@ -9,8 +9,8 @@
   	
   	//DB에서 해당 회원의 정보를 읽어온다.(MemberDto)
   	MemberDao dao= MemberDao.getInstance();
-  	MemberDto dto= new MemberDto();
-  	dto=dao.getData(num);
+  	MemberDto dto= dao.getData(num);
+  	
   	String name=dto.getName();
   	String addr=dto.getAddr();
   	
@@ -33,15 +33,15 @@
 			
 			<div>
 				<label for="name">이름</label>
-				<input type="text" id="name" name="name" value="<%=name%>" />
+				<input type="text" id="name" name="name" value="<%=dto.getName()%>" />
 			</div>
 			
 			<div>
 				<label for="addr">주소</label>
-				<input type="text" id="addr" name="addr" value="<%=addr%>" />
+				<input type="text" id="addr" name="addr" value="<%=dto.getAddr()%>" />
 			</div>
 			
-			<button type="submit">수정확인</button>
+			<button type="submit">수정확인</button>	
 			<button type="reset">취소</button>
 		</form>
 	</div>
