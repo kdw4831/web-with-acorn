@@ -14,6 +14,7 @@
 			<li><a href="${pageContext.request.contextPath}/member/list.jsp">회원목록보기</a></li>
 			<li><a href="${pageContext.request.contextPath}/member/list2.jsp">회원목록보기2</a></li>
 			<li><a href="${pageContext.request.contextPath}/dept/list.jsp">부서 목록 보기</a></li>
+			<li><a href="${pageContext.request.contextPath}/guest/list.jsp">방명록 보기</a></li>
 		</ul>
 	</div>
 	
