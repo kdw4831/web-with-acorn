@@ -16,14 +16,16 @@
 <head>
 <meta charset="UTF-8">
 <title>/guest/updateform.jsp</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="container">
 		<h1>방명록 글 수정 폼</h1>
 		<form action="${pageContext.request.contextPath }/guest/update.jsp" method="post">
-			<div>
-				<label for="num">번호</label>
-				<input type="text" id="num" name="num" value="<%=dto.getNum() %>" readonly/>
+			<div mb-2>
+				<label " for="num">번호</label>
+				<input class="form-control" type="text" id="num" name="num" value="<%=dto.getNum() %>" readonly/>
 			</div>
 			<div>
 				<label for="writer">작성자</label>
