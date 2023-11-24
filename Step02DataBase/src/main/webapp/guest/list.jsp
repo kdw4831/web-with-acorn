@@ -24,6 +24,7 @@
 					<th>작성자</th>
 					<th>내용</th>
 					<th>등록일</th>
+					<th>수정</th>
 					<th>삭제</th>
 				</tr>
 			</thead>
@@ -36,6 +37,9 @@
 						<textarea rows="5" readonly><%=tmp.getContent() %></textarea>
 					</td>
 					<td><%=tmp.getRegdate() %></td>
+					<td>
+						<a href="updateform.jsp?num=<%=tmp.getNum()%>">수정</a>
+					</td>
 					<td>
 						<form action="delete.jsp" method="post">
 							<input type="hidden" name="num" value="<%=tmp.getNum() %>" />

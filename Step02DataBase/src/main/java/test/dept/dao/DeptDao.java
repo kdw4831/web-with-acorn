@@ -97,7 +97,7 @@ public class DeptDao {
 			pstmt = conn.prepareStatement(sql);
 			//? 에 바인딩 할 내용이 있으면 바인딩
 			pstmt.setInt(3, dto.getDeptno());
-			pstmt.setString(1,dto.getDname() );
+			pstmt.setString(1,dto.getDname());
 			pstmt.setString(2, dto.getLoc());
 
 			rowCount = pstmt.executeUpdate();
