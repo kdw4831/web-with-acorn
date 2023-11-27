@@ -22,6 +22,9 @@
         	<li class="nav-item">
           		<a class="nav-link <%=currentPage.equals("guest") ? "active" : "" %>" href="${pageContext.request.contextPath }/guest/list.jsp">방명록</a>
         	</li>
+        	<li class="nav-item">
+          		<a class="nav-link <%=currentPage.equals("todo") ? "active" : "" %>" href="${pageContext.request.contextPath }/todo/list.jsp">Todolist</a>
+        	</li>
       	</ul>
       	<form class="d-flex">
 	        <input class="form-control me-2" type="search" placeholder="Search" >
