@@ -160,7 +160,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="Hello" path="/Hello" reloadable="true" source="org.eclipse.jst.jee.server:Hello"/><Context docBase="Step01Servlet" path="/Step01Servlet" reloadable="true" source="org.eclipse.jst.jee.server:Step01Servlet"/><Context docBase="Step02DataBase" path="/Step02DataBase" reloadable="true" source="org.eclipse.jst.jee.server:Step02DataBase"/><Context docBase="Step01Servlet_practice" path="/Step01Servlet_practice" reloadable="true" source="org.eclipse.jst.jee.server:Step01Servlet_practice"/><Context docBase="Step03Scope" path="/Step03Scope" reloadable="true" source="org.eclipse.jst.jee.server:Step03Scope"/></Host>
+      <Context docBase="Hello" path="/Hello" reloadable="true" source="org.eclipse.jst.jee.server:Hello"/><Context docBase="Step01Servlet" path="/Step01Servlet" reloadable="true" source="org.eclipse.jst.jee.server:Step01Servlet"/><Context docBase="Step02DataBase" path="/Step02DataBase" reloadable="true" source="org.eclipse.jst.jee.server:Step02DataBase"/><Context docBase="Step01Servlet_practice" path="/Step01Servlet_practice" reloadable="true" source="org.eclipse.jst.jee.server:Step01Servlet_practice"/><Context docBase="Step03Scope" path="/Step03Scope" reloadable="true" source="org.eclipse.jst.jee.server:Step03Scope"/><Context docBase="Step04FetchAPI" path="/Step04FetchAPI" reloadable="true" source="org.eclipse.jst.jee.server:Step04FetchAPI"/></Host>
     </Engine>
   </Service>
 </Server>
