@@ -20,7 +20,13 @@
 			alert("오잉 제출?");
 			//함수에 전달되는 event 객체의 preventDefault()함수를 호출하면 폼 제출이 방지된다.=> 폼 제출이 안됨
 			e.preventDefault();
-			//폼에 입력한 내용을 직접 읽어와서 fetch() 함수를 이용해서 원하는 페이지로 전송을 해야한다.
+			//폼에 입력한 내용을 직접 읽어와서 fetch()함수를 이용해서 원하는 페이지로 전송을 해야한다.
+			//폼에 참조값
+			const form=document.querySelector("#myForm");
+			//폼에 입력한 내용을 query string 형식으로 변환해서 얻어낸다.
+			const queryString=new URLSearchParams(new FormData(form)).toString();
+			//query string을 콘솔에 출력해 보기
+			console.log(queryString);
 		});
 	</script>
 </body>
