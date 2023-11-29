@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,58 +19,46 @@
 			</div>
 			<div>
 				<label for="pwd">비밀번호</label>
-				<input type="password" class="form-control " name="pwd" id="pwd"/>
+				<input type="password" class="form-control" name="pwd" id="pwd"/>
 				<div class="invalid-feedback">비밀 번호를 확인하세요</div>
 			</div>
 			<div>
 				<label for="pwd2">비밀번호 확인</label>
 				<input type="password" class="form-control" id="pwd2"/>
 			</div>
-			<button class="btn btn-primary"  type="submit" disabled>가입</button>
+			<button class="btn btn-primary" type="submit" disabled>가입</button>
 		</form>
 	</div>
 	<script>
-		//닉네임 유효성 여부를 관리할 변수
+		//닉네임 유효성 여부를 관리할 변수 
 		let isNickValid=false;
 		//비밀번호 유효성 여부를 관리할 변수 
 		let isPwdValid=false;
 		
 		/*
-			1.닉네임을 입력했을 때 유효성 여부를 변수에 저장한다.
-			2.비밀번호를 입력했을 때 유효성 여부를 변수에 저장한다.
-			3.두 변수에 있는 값이 모두 true인 경우 일때만 가입 버튼의 disabled 속성을 제거하고
-			나머지 경우에는 disabled 속성을 추가한다.
-			4.적절한 시점에 그 함수를 호출하게 하면 된다.
+			1. 닉네임을 입력했을때 유효성 여부를 변수에 저장한다.
+			2. 비밀번호를 입력했을때 유효성 여부를 변수에 저장한다.
+			3. 두 변수에 있는 값이 모두 true 일때만 가입 버튼의 disabled 속성을 제거하고 
+			   나머지 경우에는 disabled 속성을 추가하는 함수를 미리 만들어 두고 
+			4. 적절한 시점에 그 함수를 호출하게 하면 된다.
 			
 			- disabled 속성 추가 하는 방법
-			버튼의 참조값.setAttribute("disabled","")
+			버튼의 참조값.setAttribute("disabled", "")
 			- disabled 속성 제거 하는 방법
 			버튼의 참조값.removeAttribute("disabled")
 		*/
 		
-		/*
-		isNickValid=document.querySelector("#nick").classList.contains("is-valid");
-		isPwdValid=document.querySelector("#pwd").classList.contains("is-valid")
-		if(isNickValid==true && isPwdValid==true){
-			document.querySelector("[type=submit]").removeAttribute("disabled");
-			
-		}else{
-			document.querySelector("[type=submit]").setAttribute("disabled","");
-		
-		}
-		*/
-		const checkForm=()=>{
-			//만일 닉네임도 유효하고 비밀번호도 유효하다면
+		const checkForm = ()=>{
+			//만일 닉네임도 유효하고 그리고 비밀번호도 유효 하다면
 			if(isNickValid && isPwdValid){
-				//전송 버튼에 disabled 속성을 제거하고
+				//전송 버튼에 disabled 속성을 제거하고 
 				document.querySelector("[type=submit]").removeAttribute("disabled");
 			}else{
-				//전송 버튼에 disabled 속성을 추가한다.
+				//전송 버튼에 disabled 속성을 추가한다
 				document.querySelector("[type=submit]").setAttribute("disabled", "");
 			}
 		};
 		
-	
 		//닉네임을 입력했을때 실행할 함수 등록
 		document.querySelector("#nick").addEventListener("input", ()=>{
 			//현재까지 입력한 닉네임을 읽어온다.
@@ -86,18 +73,18 @@
 				//data 는 {canUse:true} or {canUse:false} 형태의 object 이다.
 				if(data.canUse){
 					document.querySelector("#nick").classList.add("is-valid");
-					//사용할 수 있는 닉네임이라는 의미에서 true를 넣어준다.
+					//사용할수 있는 닉네임이라는 의미에서 true 를 넣어준다.
 					isNickValid=true;
 				}else{
 					document.querySelector("#nick").classList.add("is-invalid");
-					//사용할 수 없는 닉네임이라는 의미에서 false를 넣어준다.
+					//사용할수 없는 닉네임이라는 의미에서 false 를 넣어준다.
 					isNickValid=false;
 				}
 				checkForm();
-				
 			});
 		});
-		const checkPwd=()=>{
+		//함수를 미리 만들어서 
+		const checkPwd = ()=>{
 			//양쪽에 입력한 비밀번호를 읽어와서
 			let pwd=document.querySelector("#pwd").value;
 			let pwd2=document.querySelector("#pwd2").value;
@@ -106,21 +93,19 @@
 			document.querySelector("#pwd").classList.remove("is-invalid");
 			if(pwd == pwd2){
 				document.querySelector("#pwd").classList.add("is-valid");
-				//비밀번호가 유효하다는 의미에서 true를 넣어준다.
+				//비밀번호가 유효 하다는 의미에서 true 를 넣어준다.
 				isPwdValid=true;
 			}else{
 				document.querySelector("#pwd").classList.add("is-invalid");
-				//비밀번호가 유효하지 않다는 의미에서 false를 넣어준다.
+				//비밀번호가 유효 하지 않다는 의미에서 false 를 넣어준다.
 				isPwdValid=false;
 			}
 			checkForm();
-			
-		}
+		};
 		
 		document.querySelector("#pwd").addEventListener("input", checkPwd);
+		
 		document.querySelector("#pwd2").addEventListener("input", checkPwd);
-		
-		
 	</script>
 </body>
 </html>
