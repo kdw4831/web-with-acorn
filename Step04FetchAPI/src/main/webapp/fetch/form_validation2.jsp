@@ -49,17 +49,7 @@
 			버튼의 참조값.removeAttribute("disabled")
 		*/
 		
-		/*
-		isNickValid=document.querySelector("#nick").classList.contains("is-valid");
-		isPwdValid=document.querySelector("#pwd").classList.contains("is-valid")
-		if(isNickValid==true && isPwdValid==true){
-			document.querySelector("[type=submit]").removeAttribute("disabled");
-			
-		}else{
-			document.querySelector("[type=submit]").setAttribute("disabled","");
 		
-		}
-		*/
 		const checkForm=()=>{
 			//만일 닉네임도 유효하고 비밀번호도 유효하다면
 			if(isNickValid && isPwdValid){

@@ -10,5 +10,8 @@
 	if(nick.equals("kimgura")){
 		canUse=false;
 	}
+	
+	
 %>
+
 {"canUse":<%=canUse %>}

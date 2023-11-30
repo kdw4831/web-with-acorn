@@ -5,14 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/fetch/form_validation2.jsp</title>
+<title>/fetch/form_validation4.jsp</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="container">
 		<h1>폼 유효성 검증 style 테스트</h1>
-		<form action="signup.jsp" method="post">
+		<form action="signup.jsp" method="post" class="animate__animated animate__zoomInLeft  ">
 			<div>
 				<label class="form-label" for="nick">닉네임</label>
 				<input class="form-control" type="text" name="nick" id="nick"/>
@@ -29,6 +30,12 @@
 				<label for="pwd2">비밀번호 확인</label>
 				<input type="password" class="form-control" id="pwd2"/>
 			</div>
+			<div>
+				<label class="form-label" for="comment">하고 싶은 말</label>
+				<textarea class="form-control animate__animated "  name="comment" id="comment"  rows="10"></textarea>
+				<div class="form-text">100글자 이내로 입력 해주세요</div>
+				<div class="form-text">글자 수: <strong id="textCount">0</strong></div>
+			</div>
 			<button class="btn btn-primary"  type="submit" disabled>가입</button>
 		</form>
 	</div>
@@ -37,6 +44,8 @@
 		let isNickValid=false;
 		//비밀번호 유효성 여부를 관리할 변수 
 		let isPwdValid=false;
+		//하고싶은 말 유효성 여부를 관리할 변수
+		let isCommentValid=true;
 		
 		/*
 			1.닉네임을 입력했을 때 유효성 여부를 변수에 저장한다.
@@ -50,21 +59,10 @@
 			- disabled 속성 제거 하는 방법
 			버튼의 참조값.removeAttribute("disabled")
 		*/
-		
-		/*
-		isNickValid=document.querySelector("#nick").classList.contains("is-valid");
-		isPwdValid=document.querySelector("#pwd").classList.contains("is-valid")
-		if(isNickValid==true && isPwdValid==true){
-			document.querySelector("[type=submit]").removeAttribute("disabled");
-			
-		}else{
-			document.querySelector("[type=submit]").setAttribute("disabled","");
-		
-		}
-		*/
+	
 		const checkForm=()=>{
-			//만일 닉네임도 유효하고 비밀번호도 유효하다면
-			if(isNickValid && isPwdValid){
+			//만일 닉네임도 유효하고 비밀번호도 유효하고 그리고 하고싶은말도 유효하다면
+			if(isNickValid && isPwdValid &&isCommentValid){
 				//전송 버튼에 disabled 속성을 제거하고
 				document.querySelector("[type=submit]").removeAttribute("disabled");
 			}else{
@@ -74,8 +72,8 @@
 		};
 		//닉네임을 검증할 정규표현식 객체 
 		const regNick=/^[a-zA-Z]+$/;
-		//닉네임을 입력했을때 실행할 함수 등록
-		document.querySelector("#nick").addEventListener("input", ()=>{
+		//닉네임을 입력하고 포커스를 다른곳으로 이동했을 때 검증 수행하기(blur는 focus를 잃었을 때 발생하는 이벤트)
+		document.querySelector("#nick").addEventListener("blur", ()=>{
 			//현재까지 입력한 닉네임을 읽어온다.
 			let inputNick=document.querySelector("#nick").value;			
 			// 원래는 긴코드를 if문안에 넣어야하지만 만족하지 않는경우를 아무것도 리턴하지않으면 fetch에 값이 들어가지 않는다.
@@ -131,6 +129,44 @@
 		
 		document.querySelector("#pwd").addEventListener("input", checkPwd);
 		document.querySelector("#pwd2").addEventListener("input", checkPwd);
+		
+		//Textarea 유효성
+		document.querySelector("#comment").addEventListener("input",(e)=>{
+			// 이 함수에는 발생한 이벤트에 대한 정보를 가지고 있는 event 객체가 매개변수에 전달된다.
+			console.log(e);
+			//입력한 문자열 읽어오기(e.target은 이벤트가 발생한 바로 그 요소의 참조값이다.)
+			const msg=e.target.value;
+			//문자열의 길이
+			const length=msg.length;// e.target.value.length 해서 한번에 읽어올 수 있다.
+			//만일 100글자 초과로 입력한다면
+			if(length>100){
+				e.target.classList.add("is-invalid");
+				isCommentValid=false;
+				//애니메이션 효과를 주기위해
+				e.target.classList.add("animate__shakeX");
+				//"animationend" 이벤트가 일어 났을 때 "animate__shakeX" 클래스를 제거 해보세요
+				
+				/*e.target.addEventListener("animationend",()=>{
+					e.target.classList.remove("animate__shakeX");
+				})*/
+				
+				//클래스 제거하기
+				e.target.addEventListener("animationend",()=>{
+					e.target.classList.remove("animate__shakeX");
+				},{once:true} );
+			}else{
+				//document.querySelector("#comment")  == e.target 이거지
+				e.target.classList.remove("is-invalid");
+				isCommentValid=true;
+			}
+			
+			document.querySelector("#textCount").innerText=length;
+			checkForm();			
+			
+			
+			
+		});
+		
 		
 		
 	</script>
