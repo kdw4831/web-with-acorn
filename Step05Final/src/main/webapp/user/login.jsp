@@ -12,7 +12,7 @@
 	//2. id에 해당하는 회원정보를 UserDao 객체를 이용해서 얻어와서
 		UserDto dto=UserDao.getInstance().getData(id);
 	//3. 실제로 존재하는 아이디 이고 존재한다면 비밀번호도 일치하는지 비교해서 
-			
+			// 전송한 아이디가 존재하면 => dto가 null이 아닐 때 
 		boolean isLoginSuccess=false;
 		if(dto != null){
 			if(dto.getPwd().equals(pwd)){
