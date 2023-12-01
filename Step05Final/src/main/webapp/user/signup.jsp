@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	
 	//1. 폼 전송되는 가입 회원 정보를 읽어와서
 	String id=request.getParameter("id");
 	String pwd=request.getParameter("pwd");

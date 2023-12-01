@@ -19,7 +19,7 @@
 		<h1>인덱스 페이지 입니다.</h1>
 		<%if(id!=null){ %>
 			<p>
-				<strong><%=id %></strong>님 로그인중...
+				<a href="${pageContext.request.contextPath}/user/protected/info.jsp"><%=id %></a>님 로그인중...
 				<a href="${pageContext.request.contextPath}/user/logout.jsp">로그아웃</a>
 			</p>
 		<%}else{ %>
@@ -28,6 +28,7 @@
 		
 		<ul>
 			<li><a href="${pageContext.request.contextPath}/user/signup_form.jsp">회원가입</a></li>
+			<li><a href="${pageContext.request.contextPath}/user/protected/info.jsp">개인정보</a></li>
 		</ul>
 	</div>
 </body>
