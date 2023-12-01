@@ -7,7 +7,7 @@
 	String id=(String)session.getAttribute("id");
 	//폼 전송되는 구 비밀번호,새 비밀번호 읽어오기
 	String pwd=request.getParameter("pwd");
-	String newPwd=request.getParameter("newpwd");
+	String newPwd=request.getParameter("newPwd");
 	
 	//작업의 성공여부
 	boolean isSuccess=false;

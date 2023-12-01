@@ -21,19 +21,19 @@
 		<div class="container">
 		<h1>비밀 번호 수정 페이지</h1>
 		<form action="pwd_update.jsp" method="post" id="myForm">
-			<div>
-				<label for="pwd">기존 비밀번호</label>
-				<input type="password" name="pwd" id="pwd"/>
+			<div class="mb-2">
+				<label class="form-label" for="pwd">기존 비밀번호</label>
+				<input class="form-control" type="password" name="pwd" id="pwd"/>
 			</div>
-			<div>
-				<label for="newPwd">새 비밀번호</label>
-				<input type="password" name="newPwd" id="newPwd"/>
+			<div class="mb-2">
+				<label class="form-label" for="newPwd">새 비밀번호</label>
+				<input class="form-control" type="password" name="newPwd" id="newPwd"/>
 			</div>
-			<div>
-				<label for="newPwd2">새 비밀번호 확인</label>
-				<input type="password" id="newPwd2"/>
+			<div class="mb-2">
+				<label class="form-label" for="newPwd2">새 비밀번호 확인</label>
+				<input class="form-control" type="password" id="newPwd2"/>
 			</div>
-			<button type="submit">수정하기</button>
+			<button class="btn btn-primary" type="submit">수정하기</button>
 			<button type="reset">리셋</button>		
 		</form>
 	</div>
