@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/user/protecte/info.jsp</title>
+<title>/user/protected/info.jsp</title>
 </head>
 <body>
 	<div class="container">

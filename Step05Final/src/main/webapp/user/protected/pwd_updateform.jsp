@@ -33,11 +33,13 @@
 				<label class="form-label" for="newPwd2">새 비밀번호 확인</label>
 				<input class="form-control" type="password" id="newPwd2"/>
 			</div>
-			<button class="btn btn-primary" type="submit">수정하기</button>
+			<button class="btn btn-primary" type="submit" disabled>수정하기</button>
 			<button type="reset">리셋</button>		
 		</form>
 	</div>
 	<script>
+		let btnCheck=false;
+
 		//폼에 submit 이벤트가 일어났을때 실행할 함수를 등록하고 
 		//submit이라는 이벤트는 form에서 전송되는 것 즉 button에서 전송되는 것이 아니다.
 		document.querySelector("#myForm").addEventListener("submit", (e)=>{
@@ -45,10 +47,19 @@
 			let pwd1=document.querySelector("#newPwd").value;
 			let pwd2=document.querySelector("#newPwd2").value;
 			//만일 새 비밀번호와 비밀번호 확인이 일치하지 않으면 폼 전송을 막는다.
+			document.querySelector("#newPwd").classList.remove("is-invalid")
+			document.querySelector("#newPwd").classList.remove("is-valid")
 			if(pwd1 != pwd2){
-				alert("비밀번호를 확인 하세요!");
+				alert("비밀번호를 확인하세요!");
 				e.preventDefault();
+				document.querySelector("#newPwd").classList.add("is-invalid")
+			}else{
+				document.querySelector("#newPwd").classList.add("is-valid")
 			}
+			
+			
+						
+			
 		});
 	</script>
 </body>
