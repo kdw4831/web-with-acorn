@@ -16,12 +16,12 @@ import javax.servlet.http.HttpSession;
 
 
 // /user/protected/info.jsp
-@WebFilter({"/user/protected/*","/shop/*"})
+@WebFilter({"/user/protected/*","/shop/*", "/file/protected/*"})
 public class LoginFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+			throws IOException, ServletException { 
 		//1. 로그인된 클라이언트인지 확인한다	
 		//부모 type 을 자식 type 으로 casting!
 		HttpServletRequest req=(HttpServletRequest)request;

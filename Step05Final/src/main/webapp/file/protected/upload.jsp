@@ -1,10 +1,15 @@
+<%@page import="test.file.dao.FileDao"%>
+<%@page import="test.file.dto.FileDto"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <%
+	//당연히 오류 multipart여서 안됨..
+	//String title=request.getParameter("title");
+
 	//파일 시스템 상에서 webapp의 upload 폴더 까지의 절대경로를 얻어낸다.
 	String realPath=application.getRealPath("/upload");
 	//해당 경로를 access 할 수 있는 파일 객체 생성
@@ -31,24 +36,42 @@
 	String saveFileName=mr.getFilesystemName("myFile");
 	//업로드된 파일의 크기(다운로드 해줄 때 필요하다.)
 	long fileSize=mr.getFile("myFile").length();
-%>
-
+	
+	//로그인 된 아이디(작성자)
+	String writer=(String)session.getAttribute("id");
+	
+	//DB에 저장할 정보를 FileDto에 담는다.
+	FileDto dto= new FileDto();
+	dto.setWriter(writer);
+	dto.setTitle(title);
+	dto.setOrgFileName(orgFileName);
+	dto.setSaveFileName(saveFileName);
+	dto.setFileSize(fileSize);
+	
+	//FileDao를 이용해서 DB에 업로드 된 파일의 정보를 저장하고
+	boolean isSuccess=FileDao.getInstance().insert(dto);
+	//응답한다.
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/test/upload.jsp</title>
+<title>/file/protected/upload.jsp</title>
 </head>
 <body>
-	<p>
-		title: <strong><%=title %></strong><br/>
-		원본 파일명: <strong><%=orgFileName %></strong><br/>
-		저장된 파일명:<strong><%=saveFileName %> </strong><br/>
-		파일의 크기: <strong><%=fileSize %></strong>byte<br/>
-		파일이 저장된 실제 경로: <strong><%=realPath %></strong><br/>
-		<a href="${pageContext.request.contextPath}/test/download?orgFileName=<%=orgFileName%>&
-																	saveFileName=<%=saveFileName %>&
-																	fileSize=<%=fileSize %>">다운로드</a>
-	</p>
+	<div class="container">
+		<%if(isSuccess){ %>
+			<p>
+				<%=writer %>님이 업로드한 <%=orgFileName %>파일을 저장했습니다.
+				<a href="${pageContext.request.contextPath}/file/list.jsp">목록보기</a>
+			</p>
+		<p><%=realPath %></p>
+		<%}else{ %>
+			<p>
+				업로드 실패!
+				<a href="upload_form.jsp">다시시도</a>
+			</p>
+		<%} %>
+	</div>
 </body>
 </html>

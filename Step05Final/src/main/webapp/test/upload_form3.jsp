@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 		<h3>이미지 업로드 폼</h3>
-		<form action="upload2.jsp" method="post" enctype="multipart/form-data" id="myForm">
+		<form action="upload3.jsp" method="post" enctype="multipart/form-data" id="myForm">
 			<input type="text" name="title" placeholder="설명입력" /><br />
 			이미지<input type="file" name="myImage" accept="image/*" /><br />
 			<button type="submit">업로드</button>
@@ -24,7 +24,7 @@
 			//폼에 입력하거나 선택된 데이터를 FormData 객체에 담는다.
 			//submit 이벤트가 일어난 바로 그 요소
 			//즉 form의 참조값 
-			const data= new FormData(e.target);
+			const data= new FormData(e.target); //폼에 입력한 내용을 패치함수로 보내는것
 			//fetch()함수를 이용해서 페이지 전환없이 전송한다.
 			fetch("upload3.jsp",{
 				method:"post",

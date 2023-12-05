@@ -48,7 +48,7 @@
 		파일이 저장된 실제 경로: <strong><%=realPath %></strong><br />
 		<a href="${pageContext.request.contextPath}/test/download?orgFileName=<%=orgFileName%>&
 																	saveFileName=<%=saveFileName %>&
-																	fileSize=<%=fileSize %>">다운로드</a>
+																	fileSize=<%=fileSize %>">다운로드</a><br />
 																	
 		<img width="300"src="${pageContext.request.contextPath}/upload/<%=saveFileName %>"/>
 	</p>
