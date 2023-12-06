@@ -1,4 +1,4 @@
-package test.servlet;
+package test.file.servlet;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -20,11 +20,15 @@ import test.file.dto.FileDto;
 public class FileDownServlet2 extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//다운로드 작업에 필요한 3가지 정보 (원본파일명, 저장된파일명, 파일의 크기) 얻어오기
-		//지금은 파라미터로 전달되지만 실제로는 DB 에 저장된 정보를 읽어와서 다운로드 해야 한다.		
+		//get 방식 요청 파라미터로 전달되는 다운로드 해줄 파일의 번호
 		String s_num=req.getParameter("num");
+		//다운로드 해줄 파일의 정보 얻어오기
 		int num=Integer.parseInt(s_num);
 		FileDto dto=FileDao.getInstance().getData(num);
+		
+		
+		//다운로드 작업에 필요한 3가지 정보 (원본파일명, 저장된파일명, 파일의 크기) 얻어오기
+		//지금은 파라미터로 전달되지만 실제로는 DB 에 저장된 정보를 읽어와서 다운로드 해야 한다.
 		String orgFileName=dto.getOrgFileName();
 		String saveFileName=dto.getSaveFileName();
 		long fileSize=dto.getFileSize();
