@@ -113,7 +113,7 @@ public class FileDao {
 					+ " FROM"
 					+ "	(SELECT result1.*,ROWNUM AS rnum "
 					+ "	FROM"
-					+ "		(SELECT num, writer,title,orgFileName, fileSize,regdate\r\n"
+					+ "		(SELECT num, writer,title,orgFileName, fileSize,regdate"
 					+ "		FROM board_file"
 					+ "		ORDER BY num DESC)result1)"
 					+ " WHERE rnum BETWEEN ? AND ?";

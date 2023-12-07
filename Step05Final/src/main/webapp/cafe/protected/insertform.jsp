@@ -18,22 +18,32 @@
 
 
 	<div class="container">
-	<form action="insert.jsp" method="post">
-	<h2>글쓰기</h1>
-	<input type="hidden"  />
-	<div class="mb-2">
-		<label class="form-label" for="title">제목</label>
-		<input type="text" name="title" id="title" placeholder="제목을 입력해주세요" />
-	</div>
-	<div class="mb-2">
-		<label for="content">내용</label>
-		<textarea name="content" id="content" cols="30" rows="10"></textarea>
-	</div>
-	<button type="submit">저장</button>
-
-	</form>
+		<form action="insert.jsp" method="post">
+		<h2>글쓰기</h1>
+		
+		<div class="mb-2">
+			<label class="form-label" for="title">제목</label>
+			<input class="form-control" type="text" name="title" id="title" placeholder="제목을 입력해주세요" />
+		</div>
+		<div class="mb-2">
+			<label for="content">내용</label>
+			<textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
+		</div>
+		<button class="btn btn-dark" type="submit">저장</button>
+	
+		</form>
 		
 	
 	</div>
+	
+	<script>
+		let titleValue=document.querySelector("#title").value;
+		let contentValue=document.querySelector("content").value;
+		if(titleValue=""){
+			alert("제목을 입력해주세요");
+			return;
+		}
+	</script>
+	
 </body>
 </html>
