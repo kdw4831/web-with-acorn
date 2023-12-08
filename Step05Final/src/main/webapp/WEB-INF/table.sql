@@ -35,6 +35,12 @@ CREATE TABLE board_cafe(
 --게시글의 번호를 얻어낼 시퀀스
 CREATE SEQUENCE board_cafe_seq;
 
+-- 어떤 세션에서 몇번글을 읽었는지 정보를 저장할 테이블
+CREATE TABLE readed_data(
+	num NUMBER REFERENCES board_cafe(num),
+	session_id VARCHAR2(50)
+)
+
 --페이징 처리를 하기 위해서는 1.정렬 2.행 번호 부여 3.원하는 행만 select
 SELECT *
 FROM

@@ -9,6 +9,7 @@
 	String id= (String)session.getAttribute("id");
 	int pageNum=Integer.parseInt(request.getParameter("pageNum"));
 	
+	
 	//ViewCount올리기
 	dto.setViewCount(dto.getViewCount()+1);
 	boolean isSuccess=CafeDao.getInstance().update(dto);
