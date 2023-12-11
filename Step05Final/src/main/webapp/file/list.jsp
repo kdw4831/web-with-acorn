@@ -90,6 +90,9 @@
 </style>
 </head>
 <body>
+	<jsp:include page="/include/navbar.jsp">
+		<jsp:param value="index" name="current"/>
+	</jsp:include>
 	<div class="container">
 		
 		<a href="${pageContext.request.contextPath}/file/protected/upload_form.jsp">업로드 하러 가기</a>
@@ -167,7 +170,7 @@
 	
 	</div>
 	
-	
+	<jsp:include page="/include/footer.jsp"></jsp:include>
 	
 </body>
 </html>
