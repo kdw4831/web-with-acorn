@@ -13,20 +13,27 @@
 		<form action="pwd_update.jsp" method="post" id="myForm">
 			<div class="mb-2">
 				<label class="form-label" for="pwd">기존 비밀번호</label>
-				<input class="form-control" @input="onPwdInput" v-bind:class="{'is-invalid': !isPwdValid, 'is-valid':isPwdValid}" type="password" name="pwd" id="pwd"/>
+				<input class="form-control" 
+					@input="onPwdInput" 
+					v-bind:class="{'is-invalid': !isPwdValid && isPwdDirty, 'is-valid':isPwdValid}" type="password" name="pwd" id="pwd"/>
 				<div class="invalid-feedback">반드시 입력하세요</div>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPwd">새 비밀번호</label>
-				<input class="form-control" type="password" name="newPwd" id="newPwd"/>
-				<small class="form-text">반드시 입력하고 아래의 확인란과 동일해야 합니다.</small>
+				<input class="form-control" type="password" name="newPwd" id="newPwd"
+					@input="onNewPwdInput" 
+					v-model="newPwd"
+					v-bind:class="{'is-invalid': !isNewPwdValid && isNewPwdDirty, 'is-valid':isNewPwdValid}"/>
+				<small class="form-text">반드시 입력하고 아래의 확인란과 동일해야 합니다</small>
 				<div class="invalid-feedback">새 비밀번호를 확인하세요</div>
 			</div>
 			<div class="mb-2">
 				<label class="form-label" for="newPwd2">새 비밀번호 확인</label>
-				<input class="form-control" type="password" id="newPwd2"/>
+				<input class="form-control" type="password" id="newPwd2"
+					@input="onNewPwdInput" v-model="newPwd2"/>
 			</div>
-			<button class="btn btn-success" type="submit" v-bind:disabled="!isPwdValid">수정하기</button>
+			<%-- 비밀번호 입력란이 유효하지 않거나 또는 새 비밀번호 입력란이 유효하지 않으면 --%>
+			<button class="btn btn-success" type="submit" v-bind:disabled="!isPwdValid || !isNewPwdValid">수정하기</button>
 			<button class="btn btn-danger" type="reset">리셋</button>		
 		</form>
 	</div>
@@ -35,7 +42,12 @@
 		new Vue({
 			el:"#app",
 			data:{
-				isPwdValid:false
+				isPwdValid:false,
+				isNewPwdValid:false,
+				newPwd:"",
+				newPwd2:"",
+				isPwdDirty:false,// 비밀번호 입력란에 한 번이라도 입력했는지 여부
+				isNewPwdDirty: false// 새 비밀번호 입력란에 한명이라도 입력했는지 여브
 			},
 			methods:{
 				onPwdInput(e){
@@ -48,12 +60,32 @@
 					}else{
 						this.isPwdValid=false;
 					}
+				},
+				
+				//공백이 아닌 글자를 하나 이상 입력했는지 확인할 정규표현식
+				onNewPwdInput(){
+					const reg_pwd=/[\S]+/;
+					//만일 정규 표현식도 통과하고 그리고 두개의 비밀번호가 같다면
+					if(reg_pwd.test(this.newPwd) && (this.newPwd === this.newPwd2)){
+						//새 비밀번호 유효성 여부를 true로 변경
+						this.isNewPwdValid = true;
+					}else{//그렇지 않다면
+						//새 비밀번호 유효성 여부를  false로 변경	this.isNewPwdValid = false;
+						this.isNewPwdValid=false;
+					}
+					this.isNewPwdDirty=true
 				}
+				
 			}
 		});
 	</script>
 </body>
 </html>
+
+
+
+
+
 
 
 
