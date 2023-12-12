@@ -91,7 +91,7 @@
 </head>
 <body>
 	<jsp:include page="/include/navbar.jsp">
-		<jsp:param value="index" name="current"/>
+		<jsp:param value="file" name="current"/>
 	</jsp:include>
 	<div class="container">
 		

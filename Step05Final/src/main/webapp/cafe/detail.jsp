@@ -41,6 +41,11 @@
 		margin:5px;
 		
 	}
+	.content2{
+		border :1px;
+		height:100px;
+		background-color:yellow;
+	}
 	
 </style>
 </head>
@@ -50,7 +55,7 @@
 		<ul>
 			<li><p class="title">제목:<%=dto.getTitle() %></p></li>
 			<li><p class="wrtier">작성자:<%=dto.getWriter() %></p></li>
-			<li><textarea  class="form-control" name="content" id="" cols="30" rows="10" readonly><%=dto.getContent() %></textarea></li>
+			<li><div id="content" class="form-control" ><%=dto.getContent() %></div></li>
 			
 		</ul>
 		<a href="${pageContext.request.contextPath}/cafe/list.jsp?pageNum=<%=pageNum %>"><button class="btn btn-primary">돌아가기</button></a>

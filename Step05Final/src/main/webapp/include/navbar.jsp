@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+    
 <%
 	//navbar.jsp 페이지가 어떤 페이지에 include 되었는지 정보 읽어오기
 	String currentPage=request.getParameter("current"); // "index" or "member" or "guest" 
-	
-	String id= (String)session.getAttribute("id");
 %>
 <nav class="navbar bg-primary navbar-expand-md" data-bs-theme="dark">
   <div class="container">
@@ -17,6 +17,7 @@
      		<span class="navbar-toggler-icon"></span>
    	</button>
     <div class="collapse navbar-collapse" id="navbarText">
+	   	<%-- 
 	   	<ul class="navbar-nav me-auto">
         	<li class="nav-item">
           		<a class="nav-link <%=currentPage.equals("cafe") ? "active" : "" %>" href="${pageContext.request.contextPath }/cafe/list.jsp">게시판</a>
@@ -26,20 +27,49 @@
         	</li>
         
       	</ul>
-      	<form class="d-flex">
-	        <input class="form-control me-2" type="search" placeholder="Search" >
-	        <button class="btn btn-info" type="submit">Search</button>
-      	</form>
-      	<span class="navbar-text ms-2">
-      		<%if(id!=null){ %>
-			<p>	
-				<a href="${pageContext.request.contextPath}/user/protected/info.jsp"><%=id %></a>님 로그인중...
-				<a href="${pageContext.request.contextPath}/user/logout.jsp">로그아웃</a>
-			</p>
-			<%}else{ %>
-				<a href="${pageContext.request.contextPath}/user/loginform.jsp">로그인</a>
-			<%} %>
-      	</span>
+      	--%>
+      	
+      	
+      	
+      	<ul class="navbar-nav me-auto">
+        	<li class="nav-item">
+          		<a class="nav-link ${param.currentPage eq 'cafe' ? 'active' : ''} " href="${pageContext.request.contextPath }/cafe/list.jsp">게시판</a>
+        	</li>
+        	<li class="nav-item">
+          		<a class="nav-link ${param.currentPage eq 'file' ? 'active' : '' }" href="${pageContext.request.contextPath }/file/list.jsp">자료실</a>
+        	</li>
+        
+      	</ul>
+      	<%-- 
+      	<%
+      		//로그인이 되었는지 session 영역에서 id를 읽어와 본다.
+      		String id= (String)session.getAttribute("id");
+      	%>
+      	<div class="navbar-nav">
+	      	<%if(id!=null){ %>
+	      		<a class="nav-link" href="${pageContext.request.contextPath}/user/protected/info.jsp"><%=id%>님 </a>
+	      		<a class="nav-link" href="${pageContext.request.contextPath}/user/logout.jsp">로그아웃</a>
+	      	<%}else{ %>
+	      		<a class="nav-link" href="${pageContext.request.contextPath}/user/loginform.jsp">로그인</a>
+	      		<a class="nav-link" href="${pageContext.request.contextPath}/user/signup_form.jsp">회원가입</a>
+	      	<% }%>	
+      	</div>
+      	--%>
+      	
+      	<div class="navbar-nav">
+	      	<c:choose>
+      			<c:when test="${not empty sessionScope.id }">
+      				<a class="nav-link" href="${pageContext.request.contextPath}/user/protected/info.jsp">${sessionScope.id }님 </a>
+	      			<a class="nav-link" href="${pageContext.request.contextPath}/user/logout.jsp">로그아웃</a>
+      			</c:when>
+      			<c:otherwise>
+      				<a class="nav-link" href="${pageContext.request.contextPath}/user/loginform.jsp">로그인</a>
+	      			<a class="nav-link" href="${pageContext.request.contextPath}/user/signup_form.jsp">회원가입</a>
+      			</c:otherwise>
+      		</c:choose>
+      	</div>
+      	
+      
     </div>
   </div>
 </nav>
