@@ -3,7 +3,7 @@
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	//한 페이지에 몇개씩 표시할 것인지
 	final int PAGE_ROW_COUNT=5;
@@ -42,6 +42,10 @@
 		endPageNum=totalPageCount;
 	}
 	List<CafeDto> list=CafeDao.getInstance().getList(startRowNum,endRowNum);
+	request.setAttribute("list", list);
+	request.setAttribute("startPageNum",startPageNum);
+	request.setAttribute("endPageNum", endPageNum);
+	request.setAttribute("totalPageCount",totalPageCount);
 %>
 <!DOCTYPE html>
 <html>
@@ -75,6 +79,7 @@
 		 		<th>작성일</th>
 		 	</thead>
 		 	<tbody>
+		 	<%-- 
 		 	<%for(CafeDto tmp:list){ %>
 		 		<tr>
 		 			<td><%=tmp.getNum() %></td>
@@ -84,11 +89,23 @@
 		 			<td><%=tmp.getRegdate() %></td>
 		 		</tr>
 		 	<%}%>
+		 	--%>
+		 	<c:forEach var="tmp" items="${list }">
+		 		<tr>
+		 			<td>${tmp.num }</td>
+		 			<td>${tmp.writer }</td>
+		 			<td><a href="${pageContext.request.contextPath}/cafe/detail.jsp?num=${tmp.num }&pageNum=${param.strpageNum }">${tmp.title }</a></td>
+		 			<td>${tmp.viewCount }</td>
+		 			<td>${tmp.regdate }</td>
+		 		</tr>
+		 	</c:forEach>
+		 	
 		 	</tbody>
 		</table>
 			<%--페이징 UI 부분 --%>
 			<nav  class="mt-5" aria-label="Page navigation example">
 			  <ul class="pagination justify-content-center ">
+			  	<%--
 			  	<%if(startPageNum!=1){ %>
 			  		<li class="page-item">
 				      <a class="page-link" href="list.jsp?pageNum=<%=startPageNum-1 %>" aria-label="Previous">
@@ -96,6 +113,15 @@
 				      </a>
 				    </li>
 			  	<%} %>
+			  	 --%>
+			  	<c:if test="${startPageNum ne 1 }">
+			  		<li class="page-item">
+				      <a class="page-link" href="list.jsp?pageNum=${startPageNum-1}" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+			  	</c:if>
+			  	<%--
 			  	<%for(int i=startPageNum; i<=endPageNum; i++){ %>
 				  	<% if(i==pageNum){%>
 				  		<li class="page-item active">
@@ -107,7 +133,23 @@
 			  			 </li>
 				  	<%} %>			
 			  	<%} %>
+			  	--%>
+			  	<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
+			  		<c:choose>
+			  		<c:when test="${i eq param.pageNum }">
+			  			<li class="page-item active">
+		  			 		<a class="page-link" href="list.jsp?pageNum=${i }">${i }</a>
+		  				</li>
+			  		</c:when>
+			  		<c:otherwise>
+			  			<li class="page-item ">
+			  			 	<a class="page-link" href="list.jsp?pageNum=${i }">${i }</a>
+			  			 </li>
+			  		</c:otherwise>
+			  		</c:choose>
+			  	</c:forEach>
 			  	
+			  	<%--
 			  	<%if(endPageNum<totalPageCount){ %>
 				    <li class="page-item">
 				      <a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1 %>" aria-label="Next">
@@ -115,7 +157,15 @@
 				      </a>
 				    </li>
 			  	<%} %>
+			   --%>
 			   
+			   <c:if test="${endPageNum lt totalPageCount }">
+			   		<li class="page-item">
+				      <a class="page-link" href="list.jsp?pageNum=${endPageNum+1 }" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				   </li>
+			   </c:if>
 			  </ul>
 			</nav>
 	</div>

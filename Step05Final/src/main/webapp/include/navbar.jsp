@@ -33,10 +33,10 @@
       	
       	<ul class="navbar-nav me-auto">
         	<li class="nav-item">
-          		<a class="nav-link ${param.currentPage eq 'cafe' ? 'active' : ''} " href="${pageContext.request.contextPath }/cafe/list.jsp">게시판</a>
+          		<a class="nav-link ${param.current eq 'cafe' ? 'active' : ''} " href="${pageContext.request.contextPath }/cafe/list.jsp">게시판</a>
         	</li>
         	<li class="nav-item">
-          		<a class="nav-link ${param.currentPage eq 'file' ? 'active' : '' }" href="${pageContext.request.contextPath }/file/list.jsp">자료실</a>
+          		<a class="nav-link ${param.current eq 'file' ? 'active' : '' }" href="${pageContext.request.contextPath }/file/list.jsp">자료실</a>
         	</li>
         
       	</ul>

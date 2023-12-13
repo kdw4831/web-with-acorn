@@ -4,7 +4,7 @@
 <%@page import="test.file.dao.FileDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	// 한 페이지에 몇개씩 표시할 것인지
 	final int PAGE_ROW_COUNT=5;
@@ -26,7 +26,6 @@
 	int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;  //등차 수열의 일반항
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*PAGE_ROW_COUNT;
-
 	
 	
 	
@@ -51,6 +50,15 @@
 	
 	// 로그인 된 사용자 읽어오기(로그인 되지 않았다면 null이다.)
 	String id=(String)session.getAttribute("id");
+	
+	//EL+JSTL을 테스트하기 위해서 응답에 필요한 데이터 (model)을 request 영역에 담기
+	//"list"라는 키값으로 파일 목록(List<FileDto>) 담기
+	request.setAttribute("list", list);
+	
+	//"startPageNum"이라는 키값으로 int type 담기
+	request.setAttribute("startPageNum",startPageNum);
+	request.setAttribute("endPageNum",endPageNum);
+	request.setAttribute("totalPageCount",totalPageCount);
 
 %>    
 <!DOCTYPE html>
@@ -111,26 +119,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<%for(FileDto tmp :list){ %>
+				<c:forEach var="tmp" items="${requestScope.list }">
 					<tr>
-						<td><%=tmp.getNum() %></td>
-						<td><%=tmp.getWriter() %></td>
-						<td><%=tmp.getTitle() %></td>
+						<td>${tmp.num }</td>
+						<td>${tmp.writer }</td>
+						<td>${tmp.title }</td>
+						<td><a href="${pageContext.request.contextPath}/file/download?num=${tmp.num }">${tmp.orgFileName }</a></td>
+						<td>${tmp.fileSize }</td>
+						<td>${tmp.regdate }</td>
 						<td>
-							<a href="${pageContext.request.contextPath}/file/download?num=<%=tmp.getNum()%>"><%=tmp.getOrgFileName() %></a>
-						</td>
-						<td><%=tmp.getFileSize() %></td>
-						<td><%=tmp.getRegdate() %></td>
-						<td>
-							<%--글 작성자와 로그인된 아이디가 같을 때만 삭제 링크를 출력해준다. --%>
-							<%-- id.equals(tmp.getWriter) 이러면 nullpointerException 오류가 발생할 수 있다.--%>
-							<%if(tmp.getWriter().equals(id)){ %>
-							
-							<%} %>
-							<a href="${pageContext.request.contextPath}/file/protected/delete.jsp?num=<%=tmp.getNum()%>">삭제</a>
+							<c:if test="${tmp.writer eq sessionScope.id }">
+								<a href="${pageContext.request.contextPath}/file/protected/delete.jsp?num=${tmp.num}">삭제</a>
+							</c:if>
 						</td>
 					</tr>
-				<%} %>
+				</c:forEach>
+				
 			</tbody>
 		</table>
 		<%--페이징 UI --%>
@@ -138,34 +142,41 @@
 		<%--
 			startPageNum이 1이 아닌 경우에만 Prev링크를 제공한다. 
 		--%>
-		<% if(startPageNum!=1){%>
+		
+		<c:if test="${startPageNum ne 1}">
 			<li>
-				<a href="list.jsp?pageNum=<%=startPageNum-1 %>">Prev</a>
-			</li>
-		<%} %>
+				<a href="list.jsp?pageNum=${startPageNum-1 }">Prev</a>
+			</li>	
+		</c:if>
 		
 		
-		<%for(int i=startPageNum; i<=endPageNum; i++){ %>
-			<%if(i==pageNum){ %>
-				<li class="active">
-					<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
-				</li>
-			<%}else{ %>
-				<li>
-					<a href="list.jsp?pageNum=<%=i%>"><%=i %></a>
-				</li>
-			<%} %>
+		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum}">
+			<c:choose>
+				<c:when test="${i eq param.pageNum }">
+					<li class="active">
+						<a href="list.jsp?pageNum=${i }">${i }</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a href="list.jsp?pageNum=${i }">${i }</a>
+					</li>
+				</c:otherwise>
 			
-		<%} %>
+			</c:choose>
+		</c:forEach>
+		
 		
 		<%--
 			마지막 페이지 번호가 전체 페이지의 갯수보다 작으면 Next 링크를 제공한다.
 		 --%>
-		 <%if(endPageNum<totalPageCount){ %>
+		
+		 
+		 <c:if test="${endPageNum lt totalPageCount }">
 		 	<li>
-		 		<a href="list.jsp?pageNum=<%=endPageNum+1%>">NEXT</a>
+		 		<a href="list.jsp?pageNum=${endPageNum+1}">NEXT</a>
 		 	</li>
-		 <%} %>
+		 </c:if>
 		 
 	</ul>
 	
