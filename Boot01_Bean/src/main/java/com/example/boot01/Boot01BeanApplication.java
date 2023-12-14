@@ -14,7 +14,7 @@ public class Boot01BeanApplication {
 	
 		//원숭이 집을 청소하려면?  homeservice와 impl 클래스는 의존관계가 없다.
 		HomeService s1= ctx.getBean(HomeService.class);
-		s1.clean("원숭이");
+		s1.clean("원숭이"); 
 		
 		//주뎅이의 빨래를 하려면?
 		s1.wash("주뎅이");
