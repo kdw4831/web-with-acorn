@@ -1,5 +1,6 @@
 package com.example.boot02.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,4 +26,8 @@ public class SendController {
 		System.out.println("msg: "+msg);
 		return "클라이언트야 메세지 잘 받았어";
 	}
+	
+	
+	
+	
 }

@@ -24,6 +24,8 @@ public class BeanConfig {
 		
 	}
 	
+	
+	
 	// MemberDao type을 리턴해주는 메소드
 	@Bean
 	public MemberDao memberdao() {
