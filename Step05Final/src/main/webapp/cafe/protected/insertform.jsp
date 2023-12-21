@@ -30,6 +30,7 @@
 			<textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
 		</div>
 		<button onclick="submitContents(this)" class="btn btn-dark" type="submit">저장</button>
+		
 	
 		</form>
 		

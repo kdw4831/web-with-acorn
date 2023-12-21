@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/templates/include/footer.html</title>
+</head>
+<body>
+	<div th:fragment="one">
+		<p>footer입니다.</p>
+		<p>어쩌구...</p>
+		<p>저쩌구...</p>
+	</div>
+	<div th:fragment="two">
+		<p>footer입니다.</p>
+		<p>어쩌구...</p>
+		<p>저쩌구...g</p>
+	</div>
+	<div th:fragment="myFooter(title)">
+		<h3 th:text="${title}"></h3>
+		<p>footer입니다.</p>
+		<p>어쩌구...</p>
+		<p>저쩌구...g</p>
+	</div>
+</body>
+</html>

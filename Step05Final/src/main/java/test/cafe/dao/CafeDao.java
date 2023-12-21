@@ -73,7 +73,7 @@ public class CafeDao {
          pstmt = conn.prepareStatement(sql);
          //? 에 바인딩 할 내용이 있으면 바인딩
          pstmt.setString(1,dto.getWriter());
-         pstmt.setString(2,dto.getTitle() );
+         pstmt.setString(2,dto.getTitle() );	
          pstmt.setString(3, dto.getContent());
          pstmt.setInt(4, dto.getViewCount());
          rowCount = pstmt.executeUpdate();

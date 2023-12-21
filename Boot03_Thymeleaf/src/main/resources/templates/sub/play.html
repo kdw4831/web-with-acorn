@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>templates/sub/play</title>
+<!--/* bootstrap css 로딩하기*/-->
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<!--/*bootstrap js 로딩하기*/-->
+<script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<h3>노는 페이지</h3>
+		<p>[[${session.id}]]님 신나게 놀아 보아요</p>
+		<a th:href="@{/home}">홈</a>
+	</div>
+</body>
+</html>

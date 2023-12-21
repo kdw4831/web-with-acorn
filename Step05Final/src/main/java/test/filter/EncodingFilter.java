@@ -16,7 +16,6 @@ import javax.servlet.annotation.WebFilter;
 //이 context에 들어오는 모든 요청에 대해서 필터링을 수행하겠다는 의미
 @WebFilter("/*")//3.
 public class EncodingFilter implements Filter {//1.
-	
 	//2.
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
