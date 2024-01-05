@@ -15,10 +15,12 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		//로그인 인터셉터를 거치지 않을 요청 등록
+		String[] whiteList={"/sub/play","/cafe/list","/cafe/detail"};
 		//동작을 원하는 인터셉터를 registry 객체를 이용해서 등록한다
 		registry.addInterceptor(loginInter)
-			.addPathPatterns("/sub/*") // sub/하위의 모든 요청에 대해서 인터셉터 동작하도록
-			.excludePathPatterns("/sub/play"); // /sub/play는 배재하기(인터셉터 동작하지 않도록)
+			.addPathPatterns("/sub/*" ,"/cafe/") // sub/하위의 모든 요청에 대해서 인터셉터 동작하도록
+			.excludePathPatterns(whiteList); // /sub/play는 배재하기(인터셉터 동작하지 않도록)
 	}
 	
 }
