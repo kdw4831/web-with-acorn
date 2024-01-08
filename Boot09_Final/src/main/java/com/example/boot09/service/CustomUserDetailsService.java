@@ -3,6 +3,7 @@ package com.example.boot09.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.boot09.dto.UserDto;
+import com.example.boot09.repository.UserDao;
 
 /*
  *   
@@ -26,35 +28,27 @@ import com.example.boot09.dto.UserDto;
  */
 @Service //bean으로 만들기 위해 
 public class CustomUserDetailsService implements UserDetailsService {
+	
+	@Autowired
+	private UserDao dao;
+	
 	//Spring Security가 로그인 처리시 호출하는 메서드
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//username에는 로그인 폼에 입력한 userName이 전달된다.
+		//1.form에 입력한 userName을 이용해서 사용자의 자세한 정보를 얻어온다. 		
+		UserDto dto=dao.getData(username); 
 		
-		// 실제 DB 에는 ROLE_XXX 형식으로 저장이 되어 있어야한다 
-		String role="";
-		if(username.equals("kimgura")) {
-			role="ROLE_USER";
-		}else if(username.equals("batman")) {
-			role="ROLE_STAFF";
-		}else if(username.equals("superman")){
-			role="ROLE_ADMIN";
+		//만일 저장된 userName이 없다면
+		if(dto==null) {
+			//예외를 발생시킨다.
+			throw new UsernameNotFoundException("존재하지 않는 사용자 입니다.");
 		}
-		//비밀번호를 암호화 하기 위한 객체
-		BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
-		//DB에는 암호화 되어서 비밀번호가 저장되어 있으므로
-		String encodedPwd=encoder.encode("1234");
 		
-		//1.DB에서 username 정보를 얻어와서
-		UserDto dto=new UserDto();
-		dto.setUserName(username);
-		dto.setPassword(encodedPwd);
-		dto.setEmail("aaa@");
-		dto.setRole(role);
 		//2.UserDetails 객체에 해당정보를 담아서 리턴해 주어야한다.
 		//권한은 1개 이지만 List에 담아서
 		List<GrantedAuthority> authList=new ArrayList<>();
-		authList.add(new SimpleGrantedAuthority(dto.getRole()));
+		//Authority는 role 앞에 "ROLE_"를 붙여주어야한다.
+		authList.add(new SimpleGrantedAuthority("ROLE_"+dto.getRole()));
 		
 		UserDetails ud= new User(dto.getUserName(), dto.getPassword(), authList);
 		return ud;

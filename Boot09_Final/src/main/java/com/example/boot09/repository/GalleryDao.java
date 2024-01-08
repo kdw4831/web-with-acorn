@@ -1,0 +1,12 @@
+package com.example.boot09.repository;
+
+import java.util.List;
+
+import com.example.boot09.dto.GalleryDto;
+
+public interface GalleryDao {
+	public void insert(GalleryDto dto);
+	public GalleryDto getdata(int num);
+	public int getCount();
+	public List<GalleryDto> getList(GalleryDto dto);
+}

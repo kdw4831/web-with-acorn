@@ -1,5 +1,8 @@
 package com.example.boot09.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("userDto") // mapper xml 에서 사용할 type alias 설정
 public class UserDto {
 	//숫자로된 아이디는 PK
 	private int id;

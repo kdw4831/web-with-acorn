@@ -1,4 +1,4 @@
-package com.example.boot09.config;
+	package com.example.boot09.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,9 @@ public class SecurityConfig {
 	@Bean // 메소드에서 리턴되는 SecurityFilterChain을 bean으로 만들어준다.
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//화이트 리스트 를 미리 배열에 넣어두기
-		String[] whiteList= {"/","/user/loginform","/user/login_fail", "user/expired"};
+		String[] whiteList= {"/", "/user/signup_form", "/user/signup", 
+				"/user/loginform", "/user/login_fail", "/user/expired",
+				"/gallery/list"};
 		//메소드의 매개변수에 HttpSecurity의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
 		
 		httpSecurity
