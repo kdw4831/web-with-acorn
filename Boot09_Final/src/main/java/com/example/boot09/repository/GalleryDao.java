@@ -9,4 +9,5 @@ public interface GalleryDao {
 	public GalleryDto getdata(int num);
 	public int getCount();
 	public List<GalleryDto> getList(GalleryDto dto);
+	public void delete(int num);
 }

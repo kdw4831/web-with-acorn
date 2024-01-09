@@ -19,5 +19,13 @@ CREATE table board_gallery(
 );
 
 CREATE SEQUENCE board_gallery_seq;
+-- LAG(컬럼명, 칸수,존재하지 않을시 기본값) OVER(정렬조건)
+SELECT *
+FROM
+	(SELECT num, writer, caption, 
+		LAG(num, 1, 0) OVER(ORDER BY num DESC) as PrevNum,
+		LEAD(num, 1, 0) OVER(ORDER BY num DESC) as NextNum
+	FROM board_gallery
+	ORDER BY num DESC)
+WHERE num=5;
 
-select * from board_gallery;
