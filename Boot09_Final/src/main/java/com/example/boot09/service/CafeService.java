@@ -1,13 +1,14 @@
 package com.example.boot09.service;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 
-@Controller
-public class CafeService {
-	
-	@GetMapping("/cafe/list")
-	public String list() {
-		return "cafe/list";
-	}
+import com.example.boot09.dto.CafeDto;
+
+public interface CafeService {
+	public void addtoWriting(CafeDto dto);
+	public void selectOne(Model model, int num); // 글 자세히 보기를 위한 기능
+	public void selectPage(Model model, int pageNum);
+	public void deleteOne(int num);
+	public void updateOne(CafeDto dto);
+	public void selectOne2(Model model,int num); // 글 수정 폼을 출력하기 위한 기능
 }

@@ -16,22 +16,33 @@
 <update id="update" parameterType="cafeDto">
 	UPDATE board_cafe
 	SET title=#{title},content=#{content},viewCount=#{viewCount}
-	WHERE num=#{num};
+	WHERE num=#{num}
 </update>
 
-<select id="getData" parameterType="int">
+<select id="getData" parameterType="int" resultType="cafeDto">
 	SELECT num,writer,title,content,viewCount,regdate
 	FROM board_cafe
-	WHERE num=#{num};
-</select>
-	
-<select id="getList" resultType="cafeDto">
-	SELECT num,writer,title,content,viewCount,regdate
-	FROM board_cafe;
+	WHERE num=#{num}
 </select>
 
-<select id="getList" parameterType="int" resultType="cafeDto"></select>
+<!-- 
+	파라미터로 전달된 dto의 필드명 혹은 Map 객체의 key 값과 일치하도록 하면 자동 바인딩 된다.
+ -->	
+<select id="getList" parameterType="cafeDto" resultType="cafeDto">
+	SELECT *
+	FROM
+		(SELECT result1.*,ROWNUM AS rnum
+		FROM
+			(SELECT num,writer,title,viewCount, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
+			FROM board_cafe
+			ORDER BY num DESC)result1)
+	WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}		
+</select>
 
-<select id="getCount"></select>
+<select id="getCount" resultType="int">
+	SELECT MAX(ROWNUM)
+	FROM board_cafe
+</select>
+
 </mapper>
 
