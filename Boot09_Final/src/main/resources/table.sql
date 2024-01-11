@@ -1,9 +1,13 @@
+drop table user_tbl;
+
 create table user_tbl(
 	id NUMBER primary key,
 	userName varchar2(20) unique,
 	password varchar2(100) not null,
 	email varchar2(100) unique,
-	role varchar2(10) not null
+	role varchar2(10) not null,
+	profile varchar2(100),
+	regdate date
 );
 create sequence user_seq;
 

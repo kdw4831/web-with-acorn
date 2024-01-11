@@ -3,6 +3,7 @@ package com.example.boot09.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,6 +17,20 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	
+	@GetMapping("/user/updateform")
+	public String updateForm(Model model) {
+		service.getInfo(model);
+		
+		return "user/updateform";
+	}
+	
+	//개인 정보 보기 요청 처리
+	@GetMapping("/user/info")
+	public String info(Model model) {
+		service.getInfo(model);
+		return "user/info";
+	}
 	
 	//회원 가입 요청처리
 	@PostMapping("/user/signup")               

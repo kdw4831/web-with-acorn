@@ -11,7 +11,7 @@ public interface CafeDao {
 	public CafeDto getData(int num);
 	public List<CafeDto> getList(CafeDto dto);
 	
-	public int getCount();
+	public int getCount(CafeDto dto);
 	
 	
 }

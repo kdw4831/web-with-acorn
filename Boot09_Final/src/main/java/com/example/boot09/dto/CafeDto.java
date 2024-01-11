@@ -22,5 +22,9 @@ public class CafeDto {
 	//페이징 처리를 위한 추가 필드
 	private int startRowNum;
 	private int endRowNum;
+	//검색 기능 관련된 필드
+	private String condition;
+	private String keyword;
+	private int pageNum=1;
 
 }

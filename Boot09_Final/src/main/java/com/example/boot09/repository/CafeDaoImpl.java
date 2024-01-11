@@ -57,9 +57,9 @@ public class CafeDaoImpl implements CafeDao {
 	
 	
 	@Override
-	public int getCount() {
-		//전체 글의 갯수를 리턴 
-		return session.selectOne("cafe.getCount");
+	public int getCount(CafeDto dto) {
+		//검색 키워드가 있다면 검색 키워드에 맞는 글의 갯수만 가져올 수 있도록 파라미터로 CafeDto를 전달한다.
+		return session.selectOne("cafe.getCount",dto);
 	}
 
 

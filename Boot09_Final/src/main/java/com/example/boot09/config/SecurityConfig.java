@@ -39,9 +39,9 @@ public class SecurityConfig {
 				.loginProcessingUrl("/user/login") //로그인 폼에서 이경로로 요청을 받고 
 				//로그인 처리를 대신 하려면 어떤 파라미터 명으로 username과  password가 넘어오는지 알려주기
 				.usernameParameter("userName")
-				.passwordParameter("password")
+				.passwordParameter("password")    
 				.successHandler(new AuthSuccessHandler()) //로그인 성공 핸들러 등록
-				.failureForwardUrl("/user/login_fail")
+				.failureForwardUrl("/user/login_fail") //실패시 경로
 				.permitAll()// 위에 명시한 모든 요청경로를  로그인 없이 요청할 수 있도록 설정
 		)
 		.logout(config->

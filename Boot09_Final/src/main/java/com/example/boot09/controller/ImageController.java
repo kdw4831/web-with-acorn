@@ -29,9 +29,9 @@ public class ImageController {
 	
 	public byte[] image(@PathVariable("imageName") String name) throws IOException {
 		//읽어드릴 파일 절대경로
-		String absoutePath= fileLocation+File.separator+name;
+		String absolutePath= fileLocation+File.separator+name;
 		//파일에서 읽어들일 inputStream
-		InputStream is =new FileInputStream(absoutePath);
+		InputStream is =new FileInputStream(absolutePath);
 		//commons io에 있는 IOUtils 클래스를 이용해서 이미지 파일에서 byte[]을 얻어낸다.
 		return IOUtils.toByteArray(is);
 	}

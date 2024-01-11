@@ -1,5 +1,7 @@
 package com.example.boot09.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +46,7 @@ public class CafeController { //bean도 되고 controller 역할도 하고
 	public String insertForm() {
 		return "cafe/insertform";
 	}
-	
+
 	@PostMapping("/cafe/insert")
 	public String insert(CafeDto dto) {
 		service.addtoWriting(dto);
@@ -54,8 +56,8 @@ public class CafeController { //bean도 되고 controller 역할도 하고
 	
 	
 	@GetMapping("/cafe/list")
-	public String list(Model model,@RequestParam(defaultValue="1") int pageNum) {
-		service.selectPage(model,pageNum);
+	public String list(Model model, CafeDto dto) {
+		service.selectPage(model,dto);
 		return "cafe/list";
 		
 	}
