@@ -40,7 +40,7 @@
 						</svg>
 					</th:block>
 					<th:block th:unless="${dto.profile == null}">
-						<img id="profileImage" th:src="@{/upload/images/{name}(name=${dto.profile})" alt="프로필 이미지" />
+						<img id="profileImage" th:src="@{/upload/images/{name}(name=${dto.profile})}" alt="프로필 이미지" />
 					</th:block>
 					
 					

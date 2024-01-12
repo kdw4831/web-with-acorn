@@ -11,12 +11,35 @@ import com.example.boot09.dto.UserDto;
 import com.example.boot09.repository.UserDao;
 import com.example.boot09.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 	// util 역할을 하는 서비스 객체를 인터페이스 type으로 DI 받아서 사용한다.
 	@Autowired
 	private UserService service;
 	
+	@PostMapping ("/user/pwd_update")
+	public String pwdUpdate(UserDto dto,HttpSession session) {
+		//비밀번호 수정이후
+		service.updatePassword(dto);
+		//강제 로그아웃 처리
+		session.invalidate();
+		return "user/pwd_update";
+	}
+	
+	@GetMapping("/user/pwd_updateform")
+	public String pwdUpdateForm() {
+		return "user/pwd_updateform";
+	}
+	
+	
+	@PostMapping("/user/update")
+	public String update(UserDto dto) {
+		service.updateUser(dto);
+		//개인정보보기로 다시 리다일렉트 시킨다.
+		return "redirect:/user/info";
+	}
 	
 	@GetMapping("/user/updateform")
 	public String updateForm(Model model) {

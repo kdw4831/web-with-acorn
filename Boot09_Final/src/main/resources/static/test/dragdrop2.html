@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/static/test/dragdrop2.html</title>
+<style>
+	#dropZone{
+		width: 400px;
+		height: 400px;
+		border: 2px dashed red;
+		border-radius: 20px;
+		/* 아래는 자식 contents 를 상하 좌우로 가운데 정렬 하기 위한 css */
+		display: flex;
+		justify-content: center;
+        align-items: center;
+	}
+	/* img 요소에 적용할 css */
+	#preview{
+		/* contain | cover | fill */
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+		border-radius:20px;
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<input type="file" id="myFile" name="myFile"/>
+		<h1>이미지 drag and drop 테스트</h1>
+		<div id="dropZone">
+			<p>이미지를 drag 해서 drop</p>
+		</div>
+		<p id="console"></p>
+	</div>
+	<script>
+		// div 의 참조값 
+		const dropZone=document.querySelector("#dropZone");
+		dropZone.addEventListener("dragover", (e)=>{
+			e.preventDefault(); //기본 이벤트 막기
+		});
+		dropZone.addEventListener("drop", (e)=>{
+			e.preventDefault(); //기본 이벤트 막기
+			// event 객체 e 에는 drop 된 파일에 대한 정보가 들어 있다.
+			const files=e.dataTransfer.files;
+			console.log(files);
+			const file=files[0];
+			let info=`파일의 이름:${file.name}, 크기:${file.size}, 유형:${file.type}`;
+			document.querySelector("#console").innerText=info;
+			// input type="file" 에 drop 된 파일을 넣어주기
+			document.querySelector("#myFile").files=files;
+			
+			//이미지 파일인지 여부를 알아내서 이미지 파일이 아니면 동작하지 않도록 설정
+			const reg=/image/;
+			if(!reg.test(file.type)){ //파일의 type 이 만일 정규표현식을 통과하지 못하면
+				alert("이미지 파일이 아닙니다!");
+				return; // 함수를 여기서 끝내기 
+			}
+			if(files.length>0){
+				//파일로 부터 데이터를 읽어들일 객체 생성
+				const reader=new FileReader();
+				//파일을 DataURL 형식의 문자열로 읽어들이기
+				reader.readAsDataURL(files[0]);
+				//로딩이 완료(파일데이터를 모드 읽었을때) 되었을때 실행할 함수 등록
+				reader.onload=(event)=>{
+					//읽은 파일 데이터 얻어내기 
+					const data=event.target.result;
+					// img 형식의 html 문자열을 만들어서 
+					let img=`<img id="preview" src="${data}">`;
+					// id 가 dropZone 인 요소에 끼워넣는다(HTML 로 해석하도록 끼워넣기)
+					document.querySelector("#dropZone").innerHTML=img;
+				};
+			}
+		});
+	</script>
+</body>
+</html>

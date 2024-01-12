@@ -24,4 +24,15 @@ public class UserDaoImpl implements UserDao{
 		return session.selectOne("user.getData", userName);
 	}
 
+	@Override
+	public void update(UserDto dto) {
+		session.update("user.update",dto);
+		
+	}
+
+	@Override
+	public void updatePwd(UserDto dto) {
+		session.update("user.updatePwd",dto);
+	}
+
 }
