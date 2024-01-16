@@ -26,5 +26,8 @@ public class CafeDto {
 	private String condition;
 	private String keyword;
 	private int pageNum=1;
+	
+	//이전글과 다음글의 글번호를 담을 필드
+	private int prevNum, nextNum;
 
 }

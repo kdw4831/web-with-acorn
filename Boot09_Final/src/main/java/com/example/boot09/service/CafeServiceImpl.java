@@ -31,13 +31,17 @@ public class CafeServiceImpl implements CafeService{
 	}
 
 	@Override
-	public void selectOne(Model model, int num) {
-		CafeDto dto=cafeDao.getData(num);
-		//id = writer지 이것도 같이 가져와서 담아줌
+	public void selectOne(Model model, CafeDto dto) {
+		//글번호를 이용해서 글 하나의 정보를 얻어와서
+		CafeDto resultDto=cafeDao.getDetail(dto);
+		//원래의 검색 조건을 글정보가 들어있는 결과 dto에 추가해준다.
+		resultDto.setCondition(dto.getCondition());
+		resultDto.setKeyword(dto.getKeyword());
+		//id = writer지 이것도 같이 가져와서 담아줌(로그인이 되지 않았다면 null이다.)
 		String id=SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		model.addAttribute("id",id);
-		model.addAttribute("dto",dto);
+		model.addAttribute("dto",resultDto);
 		
 	}
 

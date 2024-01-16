@@ -15,6 +15,12 @@
 		    <li class="breadcrumb-item active">Detail</li>
 		  </ol>
 		</nav>
+		<a th:if="${dto.prevNum ne 0}" th:href="@{/cafe/detail(num=${dto.prevNum},condition=${dto.condition},keyword=${dto.keyword})}">이전글</a>
+		<a th:if="${dto.nextNum ne 0}" th:href="@{/cafe/detail(num=${dto.nextNum},condition=${dto.condition},keyword=${dto.keyword})}">다음글</a>
+		<p th:if="${not #strings.isEmpty(dto.keyword)}">
+			<strong>[[${dto.condition}]]</strong> 조건
+			<strong>[[${dto.keyword}]]</strong> 검색어로 검색된 내용 
+		</p>
 		<h3>글 상세 보기</h3>
 			<table class="table table-bordered">
 			<tr>
@@ -39,7 +45,8 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea cols="30" rows="10">[[${dto.content}]]</textarea>
+					<!--<textarea cols="30" rows="10">[[${dto.content}]]</textarea>-->
+					<div th:text="${dto.content}"></div>
 				</td>
 			</tr>
 		</table>

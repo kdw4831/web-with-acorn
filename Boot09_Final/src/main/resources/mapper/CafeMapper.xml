@@ -18,7 +18,7 @@
 </sql>
 
 <sql id="column">
-	num,writer,title,viewCount, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
+	num,writer,title,content,viewCount, TO_CHAR(regdate, 'YYYY.MM.DD HH24:MI') AS regdate
 </sql>
 <insert id="insert" parameterType="cafeDto">
 	INSERT INTO board_cafe
@@ -38,8 +38,19 @@
 </update>
 
 <select id="getData" parameterType="int" resultType="cafeDto">
-	SELECT num,writer,title,content,viewCount,regdate
+	SELECT <include refid="column"/>
 	FROM board_cafe
+	WHERE num=#{num}
+</select>
+
+<select id="getDetail" parameterType="cafeDto" resultType="cafeDto">
+	SELECT *
+	FROM	
+		(SELECT <include refid="column"/>,
+			LAG(num,1,0) OVER (ORDER BY num DESC) AS prevNum,
+			LEAD(num,1,0) OVER (ORDER BY num DESC) AS nextNum
+		FROM board_cafe
+		<include refid="search"/>) result1
 	WHERE num=#{num}
 </select>
 
@@ -47,16 +58,15 @@
 	파라미터로 전달된 dto의 필드명 혹은 Map 객체의 key 값과 일치하도록 하면 자동 바인딩 된다.
  -->	
 <select id="getList" parameterType="cafeDto" resultType="cafeDto">
-	SELECT *
-	FROM
-		(SELECT result1.*,ROWNUM AS rnum
+		SELECT *
 		FROM
-			(SELECT <include refid="column"/>
-			FROM board_cafe
-			<include refid="search"/>
-			ORDER BY num DESC
-			)result1)
-	WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}		
+			(SELECT result1.*, ROWNUM AS rnum
+			FROM 
+				(SELECT <include refid="column"/>
+				FROM board_cafe
+				<include refid="search"/>
+				ORDER BY num DESC) result1)
+		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 </select>
 
 <!-- nvl max가 null이면 0을 스겠다. -->

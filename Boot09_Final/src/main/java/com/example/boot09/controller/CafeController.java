@@ -36,9 +36,9 @@ public class CafeController { //bean도 되고 controller 역할도 하고
 	}
 	
 	@GetMapping("/cafe/detail")
-	public String detail(int num,Model model) {
+	public String detail(Model model, CafeDto dto) {
 		
-		service.selectOne(model, num);
+		service.selectOne(model, dto);
 		return "cafe/detail";
 	}
 	

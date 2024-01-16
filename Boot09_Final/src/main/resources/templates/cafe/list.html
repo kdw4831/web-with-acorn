@@ -24,7 +24,7 @@
 			<tr th:each="tmp:${list}">
 				<td th:text="${tmp.num}"></td>
 				<td th:text="${tmp.writer}"></td>
-				<td><a th:href="@{/cafe/detail(num=${tmp.num})}">[[${tmp.title}]]</a></td>
+				<td><a th:href="@{/cafe/detail(num=${tmp.num}, condition=${dto.condition},keyword=${dto.keyword})}">[[${tmp.title}]]</a></td>
 				<td th:text="${tmp.viewCount}"></td>
 				<td th:text="${tmp.regdate}"></td>
 				
