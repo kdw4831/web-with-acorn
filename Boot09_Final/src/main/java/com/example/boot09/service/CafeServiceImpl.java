@@ -8,8 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.example.boot09.dto.CafeCommentDto;
 import com.example.boot09.dto.CafeDto;
 import com.example.boot09.exception.NotOwnerException;
+import com.example.boot09.repository.CafeCommentDao;
 import com.example.boot09.repository.CafeDao;
 
 @Service
@@ -20,6 +22,8 @@ public class CafeServiceImpl implements CafeService{
 	final int PAGE_DISPLAY_COUNT=5;
 		
 	@Autowired private CafeDao cafeDao;
+	
+	@Autowired private CafeCommentDao commentDao;
 	
 	@Override
 	public void addtoWriting(CafeDto dto) {
@@ -111,6 +115,24 @@ public class CafeServiceImpl implements CafeService{
 	public void selectOne2(Model model, int num) {
 		CafeDto dto=cafeDao.getData(num);
 		model.addAttribute("dto",dto);
+	}
+
+	@Override
+	public void saveComment(CafeCommentDto dto) {
+		// 댓글 작성자는 SpringSecurity로 부터 얻어내기
+		String writer=SecurityContextHolder.getContext().getAuthentication().getName();
+		//글번호를 미리 얻어낸다.
+		int num=commentDao.getSequence();
+		dto.setWriter(writer);
+		dto.setNum(num);
+		//만일 comment_group 번호가 넘어오지 않으면 원글의 댓글이다.
+		if(dto.getComment_group()==0) {
+			//원글의 댓글의 경우 댓글의 번호(num)가 곧 comment_group 번호가 된다.
+			dto.setComment_group(num);
+			
+		}
+		//DB 에 저장하기
+		commentDao.insert(dto);
 	}
 
 }

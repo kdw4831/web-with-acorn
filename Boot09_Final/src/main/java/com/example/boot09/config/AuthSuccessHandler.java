@@ -28,7 +28,7 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 			Authentication authentication) throws ServletException, IOException {
 		//세션 유지 시간 설정
 		HttpSession session=request.getSession();
-		session.setMaxInactiveInterval(60);// 초단위로 설정
+		session.setMaxInactiveInterval(60*20);// 초단위로 설정
 		//Authentication 객체의 메소드를 이용해서 지금 로그인된 사용자에 대한 자세한 정보를 얻어낼 수 있다.
 		String userName=authentication.getName();
 		System.out.println("로그인인된 사용자:"+userName);
