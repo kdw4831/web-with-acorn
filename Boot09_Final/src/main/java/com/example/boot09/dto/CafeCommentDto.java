@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class CafeCommentDto {
 	private int num;
 	private String writer;
-	private String content;
+	private String content; 
 	private String target_id;
 	private int ref_group;
 	private int comment_group;

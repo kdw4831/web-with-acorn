@@ -1,5 +1,7 @@
 package com.example.boot09.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,12 @@ public class CafeCommentDaoImpl implements CafeCommentDao {
 	@Override
 	public void insert(CafeCommentDto dto) {
 		session.insert("cafeComment.insert",dto);		
+	}
+
+	@Override
+	public List<CafeCommentDto> getList(CafeCommentDto dto) {
+		
+		return session.selectList("cafeComment.getList",dto);
 	}
 	
 }

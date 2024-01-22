@@ -44,8 +44,17 @@ public class CafeServiceImpl implements CafeService{
 		//id = writer지 이것도 같이 가져와서 담아줌(로그인이 되지 않았다면 null이다.)
 		String id=SecurityContextHolder.getContext().getAuthentication().getName();
 		
+		//댓글 목록을 얻어온다.
+		//CafeDto에 ref_group 번호를 담아서 dao에 전달해서 댓글 목록을 얻어낸다.
+		CafeCommentDto commentDto= new CafeCommentDto();
+		//원글의 글번호를 담아서
+		commentDto.setRef_group(dto.getNum());
+		//원글에 달린 댓글 목록을 얻어내기
+		List<CafeCommentDto> commentList=commentDao.getList(commentDto);
+		
 		model.addAttribute("id",id);
 		model.addAttribute("dto",resultDto);
+		model.addAttribute("commentList",commentList);
 		
 	}
 

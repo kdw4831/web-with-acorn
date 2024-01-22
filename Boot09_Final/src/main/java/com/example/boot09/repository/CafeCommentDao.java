@@ -1,5 +1,7 @@
 package com.example.boot09.repository;
 
+import java.util.List;
+
 import com.example.boot09.dto.CafeCommentDto;
 
 public interface CafeCommentDao {
@@ -7,4 +9,9 @@ public interface CafeCommentDao {
 	public int getSequence();
 	//댓글 추가 
 	public void insert(CafeCommentDto dto);
+	//댓글 목록
+	public List<CafeCommentDto> getList(CafeCommentDto dto);
+	
+	
+	
 }
