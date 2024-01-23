@@ -11,6 +11,10 @@ public interface CafeCommentDao {
 	public void insert(CafeCommentDto dto);
 	//댓글 목록
 	public List<CafeCommentDto> getList(CafeCommentDto dto);
+	//댓글 삭제
+	public void delete(int num);
+	//댓글 하나의 정보 리턴
+	public CafeCommentDto getData(int num);
 	
 	
 	
