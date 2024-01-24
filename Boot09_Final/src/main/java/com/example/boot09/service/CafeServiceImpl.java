@@ -34,7 +34,7 @@ public class CafeServiceImpl implements CafeService{
 		cafeDao.insert(dto);
 	}
 
-	@Override
+	@Override//getDetails
 	public void selectOne(Model model, CafeDto dto) {
 		//글번호를 이용해서 글 하나의 정보를 얻어와서
 		CafeDto resultDto=cafeDao.getDetail(dto);
@@ -49,6 +49,23 @@ public class CafeServiceImpl implements CafeService{
 		CafeCommentDto commentDto= new CafeCommentDto();
 		//원글의 글번호를 담아서
 		commentDto.setRef_group(dto.getNum());
+		
+		//댓글의 페이지 번호
+		int pageNum=1;
+		/*
+		 	[댓글 페이징 처리에 관련된 로직]
+		*/
+		//한 페이지에 댓글을 몇개씩 표시할 것인지
+		final int PAGE_ROW_COUNT=10;
+		
+		//보여줄 페이지의 시작 ROWNUM
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//보여줄 페이지의 끝 RowNum
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		//계산된 값을 dto에 담는다.
+		commentDto.setStartRowNum(startRowNum);
+		commentDto.setEndRowNum(endRowNum);
+		
 		//원글에 달린 댓글 목록을 얻어내기
 		List<CafeCommentDto> commentList=commentDao.getList(commentDto);
 		
@@ -161,6 +178,39 @@ public class CafeServiceImpl implements CafeService{
 	public void updateComment(CafeCommentDto dto) {
 		String userName=SecurityContextHolder.getContext().getAuthentication().getName();
 		String writer=commentDao.getData(dto.getNum()).getWriter();
+		if(!userName.equals(writer)) {
+			throw new NotOwnerException("댓글의 소유자가 아닙니다!");
+		}
+		//수정
+		commentDao.update(dto);
+		
+	}
+
+	@Override
+	public void getCommentList(Model model, CafeCommentDto dto) {
+		//요청된 댓글의 페이지 번호
+		int pageNum=dto.getPageNum();
+		/*
+		 	[댓글 페이징 처리에 관련된 로직]
+		*/
+		//한 페이지에 댓글을 몇개씩 표시할 것인지
+		final int PAGE_ROW_COUNT=10;
+		
+		//보여줄 페이지의 시작 ROWNUM
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//보여줄 페이지의 끝 RowNum
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		//계산된 값을 dto에 담는다.
+		dto.setStartRowNum(startRowNum);
+		dto.setEndRowNum(endRowNum);
+		
+		//pageNum에 해당하는 댓글 목록만 select 되도록 한다.
+		List<CafeCommentDto> commentList=commentDao.getList(dto);
+		
+		//응답에 필요한 데이터를 Model 객체에 담는다.
+		model.addAttribute("commentList", commentList);//댓글 목록
+		model.addAttribute("pageNum", pageNum);//페이지번호
+		model.addAttribute("ref_group", dto.getRef_group()); //원글의 글번호
 		
 	}
 

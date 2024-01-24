@@ -15,6 +15,8 @@ public interface CafeCommentDao {
 	public void delete(int num);
 	//댓글 하나의 정보 리턴
 	public CafeCommentDto getData(int num);
+	//댓글 수정
+	public void update(CafeCommentDto dto);
 	
 	
 	

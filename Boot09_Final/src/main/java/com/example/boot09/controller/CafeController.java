@@ -20,10 +20,24 @@ import com.example.boot09.service.CafeService;
 public class CafeController { //bean도 되고 controller 역할도 하고
 	@Autowired private CafeService service;
 	
+	@GetMapping("/cafe/comment_list")
+	public String commentList(Model model,CafeCommentDto dto) {
+		//CafeCommentDto에는 pageNum, ref_goup이 들어있다.(GET 방식 파라미터)
+		service.getCommentList(model, dto);
+		//templates/cafe/comment_list.html에서 댓글이 들어 있는 여러개의 li를 응답할 예정
+		return "cafe/comment_list";
+	}
+	
+	@ResponseBody
 	@PostMapping("/cafe/comment_update")
-	public String commentUpdate(CafeCommentDto dto) {
+	public Map<String,Object> commentUpdate(CafeCommentDto dto) {
+		service.updateComment(dto);
 		
-		return null;
+		Map<String,Object> map= new HashMap<>();
+		map.put("isSuccess", true);
+		map.put("num", dto.getNum());
+		map.put("content", dto.getContent());
+		return map;
 	}
 	
 	@ResponseBody

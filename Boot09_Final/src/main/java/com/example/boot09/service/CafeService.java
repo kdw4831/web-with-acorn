@@ -15,4 +15,5 @@ public interface CafeService {
 	public void saveComment(CafeCommentDto dto);
 	public void deleteComment(int num);
 	public void updateComment(CafeCommentDto dto);
+	public void getCommentList(Model model,CafeCommentDto dto);
 }
