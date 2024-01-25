@@ -65,13 +65,22 @@ public class CafeServiceImpl implements CafeService{
 		//계산된 값을 dto에 담는다.
 		commentDto.setStartRowNum(startRowNum);
 		commentDto.setEndRowNum(endRowNum);
+			
+		
 		
 		//원글에 달린 댓글 목록을 얻어내기
 		List<CafeCommentDto> commentList=commentDao.getList(commentDto);
 		
+		//원글에 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
+		int totalRow=commentDao.getCount(dto.getNum());
+		//댓글 전체 페이지의 갯수
+		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+		
+			
 		model.addAttribute("id",id);
 		model.addAttribute("dto",resultDto);
 		model.addAttribute("commentList",commentList);
+		model.addAttribute("totalPageCount",totalPageCount);
 		
 	}
 
@@ -203,6 +212,7 @@ public class CafeServiceImpl implements CafeService{
 		//계산된 값을 dto에 담는다.
 		dto.setStartRowNum(startRowNum);
 		dto.setEndRowNum(endRowNum);
+		
 		
 		//pageNum에 해당하는 댓글 목록만 select 되도록 한다.
 		List<CafeCommentDto> commentList=commentDao.getList(dto);

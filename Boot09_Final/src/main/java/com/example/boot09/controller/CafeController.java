@@ -24,6 +24,13 @@ public class CafeController { //bean도 되고 controller 역할도 하고
 	public String commentList(Model model,CafeCommentDto dto) {
 		//CafeCommentDto에는 pageNum, ref_goup이 들어있다.(GET 방식 파라미터)
 		service.getCommentList(model, dto);
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		//templates/cafe/comment_list.html에서 댓글이 들어 있는 여러개의 li를 응답할 예정
 		return "cafe/comment_list";
 	}

@@ -17,6 +17,8 @@ public interface CafeCommentDao {
 	public CafeCommentDto getData(int num);
 	//댓글 수정
 	public void update(CafeCommentDto dto);
+	//원글에 달린 댓글의 갯수 얻어내기
+	public int getCount(int ref_group);
 	
 	
 	
