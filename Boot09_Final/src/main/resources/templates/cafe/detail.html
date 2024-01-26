@@ -290,6 +290,7 @@
 					//로딩바를 띄우고
 					document.querySelector(".loader").style.display="block";
 					//페이지를 1 증가
+					currentPage++;
 					//추가 댓글을 fetch() 함수를 이용해서 요청하고  //pageNum은 댓글의 페이지 //num은 원글의 글번호 
 					fetch("[[@{/}]]cafe/comment_list?pageNum="+currentPage+"&ref_group=[[${dto.num}]]")
 					.then(res=>res.text())

@@ -76,4 +76,6 @@ CREATE TABLE board_cafe_comment(
 -- 댓글의 글번호를 얻어낼 시퀀스
 CREATE SEQUENCE board_cafe_comment_seq;
 
-SELECT * FROM board_cafe_comment;
+SELECT * 
+FROM board_cafe_comment
+WHERE ref_group=232;

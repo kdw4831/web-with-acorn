@@ -70,9 +70,10 @@ public class CafeServiceImpl implements CafeService{
 		
 		//원글에 달린 댓글 목록을 얻어내기
 		List<CafeCommentDto> commentList=commentDao.getList(commentDto);
-		
+		System.out.println("원글번호"+dto.getNum());
 		//원글에 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
 		int totalRow=commentDao.getCount(dto.getNum());
+		System.out.println("원글번호2"+dto.getNum());
 		//댓글 전체 페이지의 갯수
 		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
 		
