@@ -23,6 +23,7 @@ public class AndroidController {
 	public GalleryDto gallery(@PathVariable int num) {
 		
 		return galleryDao.getdata(num);
+	
 	}
 	
 	@GetMapping("/api/galleries")
