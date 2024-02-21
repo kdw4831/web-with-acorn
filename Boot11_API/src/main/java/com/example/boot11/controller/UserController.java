@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +38,9 @@ public class UserController {
 		//예외가 발생하지 않고 여기까지 실행 된다면 인증을 통과 한 것이다. 토큰을 발급해서 응답한다.
 		String token=jwtUtil.generateToken(dto.getUserName());
 		return token;
+	}
+	@GetMapping("/ping")
+	public String ping() {
+		return "ping";
 	}
 }

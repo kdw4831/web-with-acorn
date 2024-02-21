@@ -37,34 +37,25 @@ public class JwtFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// 쿠키에서 JWT 토큰 추출
-        Cookie[] cookies = request.getCookies();
-        // 쿠키에 
-        String jwtToken = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (jwtName.equals(cookie.getName())) {
-                    jwtToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        
-        //사용자명 
+		//클라이언트가 요청 헤더에 담은 정보를 얻어낸다.
+		String authHeader=request.getHeader("Authorization");
+		
+		String token=null;
 		String userName=null;
-		// 토큰 Bearer 로 시작 하는지 확인해서 
-		if(jwtToken.startsWith("Bearer+")) {
+        
+		// 인증 헤더가 존재하고 해당 문자열이 Bearer로 시작하는지 확인해서
+		if(authHeader !=null && authHeader.startsWith("Bearer+")) {
 			//앞에 "Bearer " 를 제외한 순수 토큰 문자열 얻어내기 
-			jwtToken=jwtToken.substring(7);
+			token=authHeader.substring(7);
 			//유틸을 이용해서 토큰에 저장된 userName (subject) 를 얻어낸다
-			userName=jwtUtil.extractUsername(jwtToken);
+			userName=jwtUtil.extractUsername(token);
 		}
 		
 		if(userName !=null && SecurityContextHolder.getContext().getAuthentication()== null) {
 			//DB에서 UserDetails 객체를 얻어내서
 			UserDetails userDetails=service.loadUserByUsername(userName);
 			//토큰이 유효한 토큰인지 유틸을 이용해서 알아낸다음
-			boolean isValid= jwtUtil.validateToken(jwtToken, userDetails);
+			boolean isValid= jwtUtil.validateToken(token, userDetails);
 			//만일 유효하다면 1회성 로그인 처리를 한다.
 
 			if(isValid) {
