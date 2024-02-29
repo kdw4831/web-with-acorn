@@ -33,10 +33,15 @@ public class SecurityConfig {
 	@Bean //메소드에서 리턴되는 SecurityFilterChain 을 bean 으로 만들어준다.
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		//화이트 리스트를 미리 배열에 넣어두기
-		String[] whiteList= {"/auth", "/index.html", "/static/**"};
+		String[] whiteList= {"/auth", "/index.html", "/static/**",
+				"/image/**","/upload/images/**","/file/**", "/editor_upload", "/editor/images/**"};
 
 		//메소드의 매개변수에 HttpSecurity 의 참조값이 전달되는데 해당 객체를 이용해서 설정을 한다음
 		httpSecurity
+		.headers(header->
+			//동일한 origin 에서 iframe 을 사용할수 있도록 설정(default 값은 사용불가)
+			header.frameOptions(option->option.sameOrigin()) //SmartEditor 에서 필요함
+		)
 		.csrf(csrf->csrf.disable())
 		.authorizeHttpRequests(config -> 
 			config
@@ -71,3 +76,14 @@ public class SecurityConfig {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
