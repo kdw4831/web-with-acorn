@@ -31,8 +31,8 @@ public class GalleryController {
 	
 	//gallery 요청
 	@GetMapping("/gallery")
-	public List<GalleryDto> getList(@RequestParam int pageNum){
-		List<GalleryDto> list=service.selectPage(pageNum);
-		return list;
+	public Map<String,Object> getList(@RequestParam int pageNum){
+		Map<String,Object> map=service.selectPage(pageNum);
+		return map;
 	}
 }

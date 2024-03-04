@@ -2,6 +2,7 @@ package com.example.boot11.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 
 	@Override
-	public List<GalleryDto> selectPage(int pageNum) {
+	public Map<String,Object> selectPage(int pageNum) {
 		
 		//보여줄 페이지의 시작 ROWNUM
 		int startRowNum = 1 + (pageNum-1) * PAGE_ROW_COUNT;
@@ -80,6 +81,7 @@ public class GalleryServiceImpl implements GalleryService{
 		dto.setEndRowNum(endRowNum);
 		//GalleryDao 객체를 이용해서 회원 목록을 얻어온다.
 		List<GalleryDto> list = dao.getList(dto);
+		
 	   
 		//하단 시작 페이지 번호 
 		int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT) * PAGE_DISPLAY_COUNT;
@@ -95,14 +97,19 @@ public class GalleryServiceImpl implements GalleryService{
 			endPageNum = totalPageCount; //보정해 준다. 
 		}
 		
-		
+		//react frontend에서 필요한 데이터를 Map에 담는다.
+		Map<String,Object> map= Map.of("list", list,
+				"startPageNum",startPageNum,
+				"endPageNum", endPageNum,
+				"totalPageCount", totalPageCount,
+				"pageNum",pageNum);
 //		view page에서 필요한 값을 Model 객체에 담기
 //		model.addAttribute("list",list);
 //		model.addAttribute("startPageNum",startPageNum);
 //		model.addAttribute("endPageNum",endPageNum);
 //		model.addAttribute("totalPageCount",totalPageCount);
 //		model.addAttribute("pageNum",pageNum);
-		return list;
+		return map;
 	}
 
 	@Override
