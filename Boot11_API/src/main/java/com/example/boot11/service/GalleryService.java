@@ -10,7 +10,7 @@ import com.example.boot11.dto.GalleryDto;
 
 public interface GalleryService {
 	public void addToGallery(GalleryDto dto);
-	public void selectOne(Model model, int num);
+	public GalleryDto selectOne( int num);
 	public Map<String,Object> selectPage(int pageNum);
 	public void deleteOne(int num);
 }
