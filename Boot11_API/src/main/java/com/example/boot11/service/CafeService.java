@@ -19,7 +19,7 @@ public interface CafeService {
 	public void selectOne2(Model model,int num); // 글 수정 폼을 출력하기 위한 기능
 	public void saveComment(CafeCommentDto dto); // 댓글 추가 기능
 	// dto에 담긴 페이지 번호에 해당하는 댓글 목록을 리턴해주는 메소드
-	public List<CafeCommentDto> getCommentList(CafeCommentDto dto);
+	public Map<String,Object> getCommentList(CafeCommentDto dto);
 	public void deleteComment(int num);
 	public void updateComment(CafeCommentDto dto);
 

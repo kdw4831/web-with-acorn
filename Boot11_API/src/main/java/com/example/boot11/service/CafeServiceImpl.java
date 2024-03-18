@@ -163,7 +163,7 @@ public class CafeServiceImpl implements CafeService{
 	}
 
 	@Override
-	public List<CafeCommentDto> getCommentList(CafeCommentDto dto) {
+	public Map<String, Object> getCommentList(CafeCommentDto dto) {
 		
 		//요청된 댓글의 페이지 번호
 		int pageNum=dto.getPageNum();
@@ -184,11 +184,13 @@ public class CafeServiceImpl implements CafeService{
 		//pageNum에 해당하는 댓글 목록만 select 되도록 한다. 
 		List<CafeCommentDto> commentList=commentDao.getList(dto);
 		
-//		//응답에 필요한 데이터를 Model 객체에 담는다.
-//		model.addAttribute("commentList", commentList); //댓글 목록
-//		model.addAttribute("pageNum", pageNum);  //페이지번호 
-//		model.addAttribute("ref_group", dto.getRef_group()); //원글의 글번호
-		return commentList;
+		//원글의 글번호를 이용해서 댓글의 전체 갯수를 얻어낸다.
+		int totalRow=commentDao.getCount(dto.getRef_group());
+		//댓글 전체 페이지의 갯수
+		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+
+		return Map.of("commentList",commentList,
+				"totalPageCount",totalPageCount);
 	
 	}
 
