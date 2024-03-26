@@ -49,13 +49,11 @@ public class CafeController {
 	
 	//댓글 추가 	요청 처리
 	@PostMapping("/cafes/comments")
-	public Map<String,Object> commentInsert(CafeCommentDto dto){
+	public CafeCommentDto commentInsert(CafeCommentDto dto){
 		//FormData를 클라이언트에서 전송했기 때문에 @ResponsBody로 받을 수 없다??
-		service.saveComment(dto);
-		dto.setPageNum(1);
-		
-		// 새로운 댓글 1페이지의 내용을 응답한다.
-		return service.getCommentList(dto);
+
+		// 새로운 댓글을 DB에 저장하고 새로 추가된 댓글의 정보를 응답한다.
+		return service.saveComment(dto);
 	}
 	
 	//댓글 삭제 요청 처리
