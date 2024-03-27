@@ -3,6 +3,7 @@ package com.example.boot13;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -109,8 +110,9 @@ public class Boot13JpaApplication {
 			queries.add("INSERT INTO EMP (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7902,'FORD','ANALYST',7566,parsedatetime('03-12-1981','dd-MM-yyyy'),3000,NULL,20);");
 			queries.add("INSERT INTO EMP (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (7934,'MILLER','CLERK',7782,parsedatetime('23-01-1982','dd-MM-yyyy'),1300,NULL,10);");
 
-			
+			//반복문 돌면서 실행할 쿼리를 얻어내서 
 			for (String query : queries) {
+				//직접 실행한다 
 			    em.createNativeQuery(query).executeUpdate();
 			}
 
@@ -147,6 +149,16 @@ public class Boot13JpaApplication {
 				.build();
 		//저장하기
 		empRepo.save(e2);
+		
+		//10 번 부서의 정보 얻어오기
+		Dept dept10 = deptRepo.findById(10).get();
+		System.out.println("10 번 부서의 정보 입니다~~~~~~~~~");
+		System.out.println("부서명:"+dept10.getDname());
+		System.out.println("부서의 위치:"+dept10.getLoc());
+		System.out.println("부서에 근무하는 인원:"+dept10.getList().size());
+		for(Emp tmp:dept10.getList()) {
+			System.out.println(tmp.getEname());
+		}
 	}
 
 	// run as spring boot app 를 실행하면 여기부터 시작이 된다.

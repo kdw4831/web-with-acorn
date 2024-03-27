@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>templates/employ/dept.html</title>
+</head>
+<body>
+	<div class="container">
+		<h1>부서 정보 자세히 보기</h1>
+		<p>
+			부서 번호 : <strong th:text="${dto.deptno}"></strong>
+		</p>
+		<p>
+			부서 이름 : <strong th:text="${dto.dname}"></strong>
+		</p>
+		<p>
+			부서 위치 : <strong>[[${dto.loc}]]</strong>
+		</p>
+		<p>
+			근무 인원수 : <strong>[[${dto.count}]]</strong>
+		</p>
+		<h3>이름 목록</h3>
+		<ul>
+			<li th:each="tmp : ${dto.names}">[[${tmp}]]</li>
+		</ul>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
