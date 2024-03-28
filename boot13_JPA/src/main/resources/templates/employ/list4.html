@@ -8,8 +8,8 @@
 <body>
 	<div class="container">
 		<h1>사원 목록 입니다</h1>
-		<table class="table table-border">
-			<thead>
+		<table class="table table-bordered">
+			<thead class="table-dark">
 				<tr>
 					<th>사원번호</th>
 					<th>사원이름</th>
@@ -34,16 +34,16 @@
 		<nav>
 			<ul class="pagination">
 				<li th:if="${startPageNum ne 1}" class="page-item">
-					<a class="page-link" th:href="@{/employ/list3(pageNum=${startPageNum-1})}">Prev</a>
+					<a class="page-link" th:href="@{/employ/list4(pageNum=${startPageNum-1})}">Prev</a>
 				</li>
 				<li th:unless="${startPageNum ne 1}" class="page-item disabled">
 					<a class="page-link" href="javascript:">Prev</a>
 				</li>
 				<li th:each="i : ${#numbers.sequence(startPageNum, endPageNum)}" th:class="${i eq pageNum ? 'page-item active' : 'page-item'}">
-					<a class="page-link" th:href="@{/employ/list3(pageNum=${i})}">[[${i}]]</a>
+					<a class="page-link" th:href="@{/employ/list4(pageNum=${i})}">[[${i}]]</a>
 				</li>
 				<li th:if="${endPageNum lt totalPageCount}" class="page-item">
-					<a class="page-link" th:href="@{/employ/list3(pageNum=${endPageNum+1})}">Next</a>
+					<a class="page-link" th:href="@{/employ/list4(pageNum=${endPageNum+1})}">Next</a>
 				</li>
 				<li th:unless="${endPageNum lt totalPageCount}" class="page-item disabled">
 					<a class="page-link" href="javascript:">Next</a>
@@ -54,16 +54,3 @@
 	</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
